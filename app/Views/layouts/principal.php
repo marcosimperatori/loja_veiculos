@@ -270,25 +270,25 @@
               <ul class="nav nav-treeview">
                 <li class="nav-item">
                   <a href="pages/layout/top-nav.html" class="nav-link">
-                    <i class="fa fa-long-arrow-right text-secondary"></i>
+                    <i class="fa fa-long-arrow-right"></i>
                     <p>Veículos</p>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a href="<?= base_url('/fabricantes') ?>" class="nav-link">
-                    <i class="fa fa-long-arrow-right nav-icon"></i>
+                    <i class="fa fa-long-arrow-right"></i>
                     <p>Frabricantes</p>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a href="<?= base_url('/clientes') ?>" class="nav-link">
-                    <i class="fa fa-long-arrow-right nav-icon"></i>
+                    <i class="fa fa-long-arrow-right"></i>
                     <p>Clientes</p>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a href="pages/layout/fixed-sidebar.html" class="nav-link">
-                    <i class="fa fa-long-arrow-right nav-icon"></i>
+                    <i class="fa fa-long-arrow-right"></i>
                     <p>Oficinas</p>
                   </a>
                 </li>

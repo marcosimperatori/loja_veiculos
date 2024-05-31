@@ -32,7 +32,7 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            <table id="example1" class="table table-bordered table-striped">
+            <table id="lista-fabricante" class="table table-bordered table-striped">
               <thead>
                 <tr>
                   <th>Rendering engine</th>
@@ -172,24 +172,21 @@
   <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="novoModalLabel">Novo Item</h5>
+        <h5 class="modal-title" id="novoModalLabel">Cadastro de fabricante</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <!-- Conteúdo do modal -->
-        <form>
-          <!-- Seu formulário aqui -->
-          <div class="form-group">
-            <label for="itemName">Nome do Item</label>
-            <input type="text" class="form-control" id="itemName" placeholder="Digite o nome do item">
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-        <button type="button" class="btn btn-primary">Salvar</button>
+        <?php echo form_open('/', ['id' => 'form_cad_tipo', 'class' => 'insert']) ?>
+        <!-- Seu formulário aqui -->
+        <?php echo $this->include('fabricantes/_form') ?>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Salvar</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        </div>
+        <?php form_close(); ?>
       </div>
     </div>
   </div>
@@ -205,7 +202,7 @@
 <!-- Page specific script -->
 <script>
   $(function() {
-    $("#example1").DataTable({
+    $("#lista-fabricante").DataTable({
       "oLanguage": DATATABLE_PTBR,
       "responsive": true,
       "lengthChange": true,
@@ -232,7 +229,7 @@
 
         }
       ]
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    }).buttons().container().appendTo('#lista-fabricante_wrapper .col-md-6:eq(0)');
 
     $('#example2').DataTable({
       "paging": true,
@@ -245,6 +242,11 @@
       "pagingType": $(window).width() < 768 ? "simple" : "simple_numbers",
       "pageLength": 10,
     });
+  });
+
+  $("#form_cad_tipo").on("submit", function(e) {
+    e.preventDefault();
+    alert("clicou!");
   });
 </script>
 
