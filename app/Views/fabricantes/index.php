@@ -32,127 +32,13 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            <table id="lista-fabricante" class="table table-bordered table-striped">
+            <table id="lista-fabricante" class="table table-striped">
               <thead>
                 <tr>
-                  <th>Rendering engine</th>
-                  <th>Browser</th>
-                  <th>Platform(s)</th>
-                  <th>Engine version</th>
-                  <th>CSS grade</th>
+                  <th>Nome fabricante</th>
+                  <th>Ações</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet
-                    Explorer 4.0
-                  </td>
-                  <td>Win 95+</td>
-                  <td> 4</td>
-                  <td>X</td>
-                </tr>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet
-                    Explorer 5.0
-                  </td>
-                  <td>Win 95+</td>
-                  <td>5</td>
-                  <td>C</td>
-                </tr>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet
-                    Explorer 5.5
-                  </td>
-                  <td>Win 95+</td>
-                  <td>5.5</td>
-                  <td>A</td>
-                </tr>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet
-                    Explorer 5.0
-                  </td>
-                  <td>Win 95+</td>
-                  <td>5</td>
-                  <td>C</td>
-                </tr>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet
-                    Explorer 5.5
-                  </td>
-                  <td>Win 95+</td>
-                  <td>5.5</td>
-                  <td>A</td>
-                </tr>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet
-                    Explorer 6
-                  </td>
-                  <td>Win 98+</td>
-                  <td>6</td>
-                  <td>A</td>
-                </tr>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet Explorer 7</td>
-                  <td>Win XP SP2+</td>
-                  <td>7</td>
-                  <td>A</td>
-                </tr>
-                <tr>
-                  <td>Trident</td>
-                  <td>AOL browser (AOL desktop)</td>
-                  <td>Win XP</td>
-                  <td>6</td>
-                  <td>A</td>
-                </tr>
-
-                <tr>
-                  <td>Gecko</td>
-                  <td>Netscape Navigator 9</td>
-                  <td>Win 98+ / OSX.2+</td>
-                  <td>1.8</td>
-                  <td>A</td>
-                </tr>
-                <tr>
-                  <td>Gecko</td>
-                  <td>Mozilla 1.0</td>
-                  <td>Win 95+ / OSX.1+</td>
-                  <td>1</td>
-                  <td>A</td>
-                </tr>
-                <tr>
-                  <td>Gecko</td>
-                  <td>Mozilla 1.1</td>
-                  <td>Win 95+ / OSX.1+</td>
-                  <td>1.1</td>
-                  <td>A</td>
-                </tr>
-                <tr>
-                  <td>Gecko</td>
-                  <td>Mozilla 1.2</td>
-                  <td>Win 95+ / OSX.1+</td>
-                  <td>1.2</td>
-                  <td>A</td>
-                </tr>
-
-
-
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Rendering engine</th>
-                  <th>Browser</th>
-                  <th>Platform(s)</th>
-                  <th>Engine version</th>
-                  <th>CSS grade</th>
-                </tr>
-              </tfoot>
             </table>
           </div>
           <!-- /.card-body -->
@@ -178,8 +64,15 @@
         </button>
       </div>
       <div class="modal-body">
+        <!-- Spinner de carregamento -->
+        <div id="loadingSpinner" class="text-center" style="display: none;">
+          <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+
         <!-- Conteúdo do modal -->
-        <?php echo form_open('/', ['id' => 'form_cad_tipo', 'class' => 'insert']) ?>
+        <?php echo form_open('/', ['id' => 'cad_fabricante', 'class' => 'insert']) ?>
         <!-- Seu formulário aqui -->
         <?php echo $this->include('fabricantes/_form') ?>
         <div class="modal-footer">
@@ -191,63 +84,8 @@
     </div>
   </div>
 </div>
-
-
-
 <?php $this->endSection(); ?>
 
-
 <?php echo $this->section('scripts'); ?>
-
-<!-- Page specific script -->
-<script>
-  $(function() {
-    $("#lista-fabricante").DataTable({
-      "oLanguage": DATATABLE_PTBR,
-      "responsive": true,
-      "lengthChange": true,
-      "info": true,
-      "deferRender": true,
-      "autoWidth": false,
-      "pagingType": $(window).width() < 768 ? "simple" : "simple_numbers",
-      "pageLength": 10,
-      "buttons": [{
-          text: 'Novo',
-          action: function(e, dt, node, config) {
-            $('#novoModal').modal('show');
-          },
-          className: 'bg-gradient-primary'
-        },
-        {
-          extend: 'pdf',
-          text: 'Exportar para PDF ',
-          orientation: 'landscape',
-        },
-        {
-          extend: 'print',
-          text: 'Imprimir'
-
-        }
-      ]
-    }).buttons().container().appendTo('#lista-fabricante_wrapper .col-md-6:eq(0)');
-
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-      "pagingType": $(window).width() < 768 ? "simple" : "simple_numbers",
-      "pageLength": 10,
-    });
-  });
-
-  $("#form_cad_tipo").on("submit", function(e) {
-    e.preventDefault();
-    alert("clicou!");
-  });
-</script>
-
+<script src="<?php echo base_url("assets/js/fabricantes.js"); ?>"></script>
 <?php $this->endSection(); ?>

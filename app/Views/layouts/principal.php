@@ -374,6 +374,9 @@
   <script src="<?= base_url('assets/plugins/datatables-buttons/js/buttons.print.min.js') ?>"></script>
   <script src="<?= base_url('assets/plugins/datatables-buttons/js/buttons.colVis.min.js') ?>"></script>
 
+  <!-- overlay -->
+  <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
+
   <script>
     const DATATABLE_PTBR = {
       sEmptyTable: "Nenhum registro encontrado",

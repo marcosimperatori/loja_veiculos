@@ -19,6 +19,27 @@ class FabricanteController extends BaseController
         return view('fabricantes/index');
     }
 
+    public function getAll()
+    {
+        $data = [];
+        $lista = $this->fabricanteModel->orderBy('fabricante', 'asc')->findAll();
+
+        foreach ($lista as $item) {
+            $id = encrypt($item->id);
+            $data[] = [
+                'descricao' => $item->fabricante,
+                'acoes' => '<a id="fabri" data-id="' . $id . '" title="Editar" style="cursor:pointer;"><i class="fas fa-edit text-success btn-edit"></i></a> &nbsp; 
+                            <a href="' . base_url("tipos/deletar/$id") . '" title="Excluir"><i class="fas fa-trash-alt text-danger btn-delete"></i></a>'
+            ];
+        }
+
+        $retorno = [
+            'data' => $data
+        ];
+
+        return $this->response->setJSON($retorno);
+    }
+
     public function criar()
     {
         if (!$this->request->isAJAX()) {
@@ -46,6 +67,42 @@ class FabricanteController extends BaseController
         $retorno['erros_model'] = $this->fabricanteModel->errors();
 
         return $this->response->setJSON($retorno);
+    }
+
+    public function edit($id = null)
+    {
+        if (is_null($id)) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'ID inválido ou nulo.'
+            ], ResponseInterface::HTTP_BAD_REQUEST);
+        }
+
+        $id = decrypt($id);
+        $fabricante = $this->fabricanteModel->find($id);
+
+        // Verifica se o fabricante foi encontrado
+        if (!$fabricante) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Fabricante não encontrado.'
+            ], ResponseInterface::HTTP_NOT_FOUND);
+        }
+
+        return $this->response->setJSON($fabricante);
+    }
+
+    public function atualizar($id)
+    {
+        if (!$this->request->isAJAX()) {
+            return redirect()->back();
+        }
+
+        $retorno['token'] = csrf_hash();
+        $post = $this->request->getPost();
+        $fabric = $this->buscaTipoOu404($post['id']);
+
+       
     }
 
 
