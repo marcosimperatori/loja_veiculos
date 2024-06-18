@@ -88,6 +88,7 @@ $("#cad_fabricante").on("submit", function (e) {
     },
     success: function (data) {
       $("[name=csrf_test_name]").val(data.token);
+      console.log(data);
 
       if (data.info) {
         $("#response").html(
@@ -148,7 +149,7 @@ function editarFabricante(id) {
 function getFabricante(id) {
   $("#mdExcluir").modal("show");
   $.ajax({
-    url: "fabricantes/editar/" + id,
+    url: "/fabricantes/editar/" + id,
     type: "GET",
     dataType: "json",
     beforeSend: function () {
@@ -160,7 +161,7 @@ function getFabricante(id) {
     success: function (data) {
       console.log(data.id + " " + data.fabricante);
       $("#fabricanteid").text(data.fabricante);
-      $("#id").val(data.id);
+      $("#codFabricante").val(data.id);
     },
     error: function () {
       console.log("Erro ao tentar recuperar os dados");
@@ -182,7 +183,7 @@ $("#lista-fabricante").on("click", "#delfabri", function () {
 });
 
 $("#removerFab").on("click", function () {
-  const id = $("#id").val();
+  const id = $("#codFabricante").val();
   $.ajax({
     url: "fabricantes/excluir/" + id,
     type: "POST",
