@@ -124,6 +124,31 @@ class FabricanteController extends BaseController
         return $this->response->setJSON($retorno);
     }
 
+    public function deletar($id = null)
+    {
+        if (!$this->request->isAJAX()) {
+            return redirect()->back();
+        }
+
+        if (is_null($id)) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'ID inválido ou nulo.'
+            ], ResponseInterface::HTTP_BAD_REQUEST);
+        }
+
+        $id = decrypt($id);
+        $fabricante = $this->fabricanteModel->find($id);
+        $nome = $fabricante->fabricante;
+
+        if ($this->fabricanteModel->delete($id)) {
+            session()->setFlashdata('sucesso', "O registro <stron>" . $nome . "</stron> foi excluído");
+            $retorno['redirect_url'] = base_url('fabricantes');
+        }
+
+        return $this->response->setJSON($retorno);
+    }
+
 
     private function buscaTipoOu404(int $id = null)
     {

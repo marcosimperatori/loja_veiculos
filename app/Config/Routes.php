@@ -12,6 +12,7 @@ $routes->get('/fabricantes', 'FabricanteController::index');
 $routes->post('/fabricantes/criar', 'FabricanteController::criar'); //ajax
 $routes->post('/fabricantes/atualizar', 'FabricanteController::atualizar'); //ajax
 $routes->get('/fabricantes/editar/(:alphanum)', 'FabricanteController::edit/$1'); //ajax
+$routes->post('/fabricantes/excluir/(:alphanum)', 'FabricanteController::deletar/$1'); //ajax
 $routes->get('/fabricantes_all', 'FabricanteController::getAll'); //ajax
 
 

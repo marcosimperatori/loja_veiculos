@@ -147,8 +147,28 @@ function editarFabricante(id) {
 
 function getFabricante(id) {
   $("#mdExcluir").modal("show");
-  $("#codigo").text(id);
-  console.log("codigo: " + id);
+  $.ajax({
+    url: "fabricantes/editar/" + id,
+    type: "GET",
+    dataType: "json",
+    beforeSend: function () {
+      $("#response").html("");
+      $("#mdExcluir").LoadingOverlay("show", {
+        background: "rgba(165, 190, 100, 0.5)",
+      });
+    },
+    success: function (data) {
+      console.log(data.id + " " + data.fabricante);
+      $("#fabricanteid").text(data.fabricante);
+      $("#id").val(data.id);
+    },
+    error: function () {
+      console.log("Erro ao tentar recuperar os dados");
+    },
+    complete: function () {
+      $("#mdExcluir").LoadingOverlay("hide");
+    },
+  });
 }
 
 $("#lista-fabricante").on("click", "#fabri", function () {
@@ -159,4 +179,28 @@ $("#lista-fabricante").on("click", "#fabri", function () {
 $("#lista-fabricante").on("click", "#delfabri", function () {
   const id = $(this).data("id");
   getFabricante(id);
+});
+
+$("#removerFab").on("click", function () {
+  const id = $("#id").val();
+  $.ajax({
+    url: "fabricantes/excluir/" + id,
+    type: "POST",
+    dataType: "json",
+    beforeSend: function () {
+      $("#response").html("");
+      $("#mdExcluir").LoadingOverlay("show", {
+        background: "rgba(165, 190, 100, 0.5)",
+      });
+    },
+    success: function (data) {
+      window.location.href = data.redirect_url;
+    },
+    error: function () {
+      console.log("Erro ao tentar excluir fabricante");
+    },
+    complete: function () {
+      $("#mdExcluir").LoadingOverlay("hide");
+    },
+  });
 });

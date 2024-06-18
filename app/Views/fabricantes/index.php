@@ -90,7 +90,7 @@
 
 <!-- Modal deletar -->
 <div class="modal fade" id="mdExcluir" tabindex="-1" role="dialog" aria-labelledby="novoModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="novoModalLabel">Exclusão de fabricante</h5>
@@ -100,15 +100,16 @@
       </div>
       <div class="modal-body">
 
-        <p id="response"></p>
+        <h2 id="response"></h2>
 
         <!-- Conteúdo do modal -->
-        <p id="codigo" name="id1"></p>
-
+        <h2 id="fabricanteid"></h2>
         <input type="hidden" name="id" id="id">
+        <br>
+        <span class="text-danger">Após excluir o registro não será possível recuperá-lo!</span>
 
         <div class="modal-footer">
-          <button type="submit" class="btn btn-danger">Excluir</button>
+          <button type="button" id="removerFab" class="btn btn-danger">Excluir</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
         </div>
 
