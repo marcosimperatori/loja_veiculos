@@ -29,7 +29,7 @@ class FabricanteController extends BaseController
             $data[] = [
                 'descricao' => $item->fabricante,
                 'acoes' => '<a id="fabri" data-id="' . $id . '" title="Editar" style="cursor:pointer;"><i class="fas fa-edit text-success btn-edit"></i></a> &nbsp; 
-                            <a href="' . base_url("tipos/deletar/$id") . '" title="Excluir"><i class="fas fa-trash-alt text-danger btn-delete"></i></a>'
+                            <a id="delfabri" data-id="' . $id . '" title="Excluir" style="cursor:pointer;"><i class="fas fa-trash-alt text-danger btn-delete"></i></a>'
             ];
         }
 
@@ -56,7 +56,7 @@ class FabricanteController extends BaseController
         if ($this->fabricanteModel->save($fabricante)) {
             $retorno['id'] = $this->fabricanteModel->getInsertID();
             $NovoFabricante = $this->buscaTipoOu404($retorno['id']);
-            session()->setFlashdata('sucesso', "O certificado ($NovoFabricante->descricao) foi incluído no sistema");
+            session()->setFlashdata('sucesso', "O certificado ($NovoFabricante->fabricante) foi incluído no sistema");
             $retorno['redirect_url'] = base_url('fabricantes');
 
             return $this->response->setJSON($retorno);
@@ -80,6 +80,7 @@ class FabricanteController extends BaseController
 
         $id = decrypt($id);
         $fabricante = $this->fabricanteModel->find($id);
+        $fabricante->id = encrypt($fabricante->id);
 
         // Verifica se o fabricante foi encontrado
         if (!$fabricante) {
@@ -92,7 +93,7 @@ class FabricanteController extends BaseController
         return $this->response->setJSON($fabricante);
     }
 
-    public function atualizar($id)
+    public function atualizar()
     {
         if (!$this->request->isAJAX()) {
             return redirect()->back();
@@ -100,9 +101,27 @@ class FabricanteController extends BaseController
 
         $retorno['token'] = csrf_hash();
         $post = $this->request->getPost();
-        $fabric = $this->buscaTipoOu404($post['id']);
 
-       
+        $fabric = $this->buscaTipoOu404(decrypt($post['id']));
+        $fabric->fill($post);
+        $fabric->id = decrypt($post['id']);
+
+        if ($fabric->hasChanged() == false) {
+            $retorno['info'] = "Não houve alteração no registro!";
+            return $this->response->setJSON($retorno);
+        }
+
+        if ($this->fabricanteModel->save($fabric)) {
+            session()->setFlashdata('sucesso', "O registro foi atualizado");
+            $retorno['redirect_url'] = base_url('fabricantes');
+            return $this->response->setJSON($retorno);
+        }
+
+        //se chegou até aqui, é porque tem erros de validação
+        $retorno['erro'] = "Verifique os aviso de erro e tente novamente";
+        $retorno['erros_model'] = $this->fabricanteModel->errors();
+
+        return $this->response->setJSON($retorno);
     }
 
 

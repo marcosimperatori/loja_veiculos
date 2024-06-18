@@ -88,8 +88,20 @@ $("#cad_fabricante").on("submit", function (e) {
     },
     success: function (data) {
       $("[name=csrf_test_name]").val(data.token);
-      //tudo certo na atualização, redirecionar o usuário
-      window.location.href = data.redirect_url;
+
+      if (data.info) {
+        $("#response").html(
+          '<div class="alert alert-warning alert-dismissible fade show" role="alert">' +
+            data.info +
+            '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+            '<span aria-hidden="true">&times;</span>' +
+            "</button>" +
+            "</div>"
+        );
+      } else {
+        //tudo certo na atualização, redirecionar o usuário
+        window.location.href = data.redirect_url;
+      }
     },
     error: function () {
       alert(
@@ -117,6 +129,7 @@ function editarFabricante(id) {
     },
     success: function (data) {
       $("#fabricante").val(data.fabricante);
+      $("#id").val(data.id);
       $("#cad_fabricante").removeClass("insert").addClass("update");
     },
     error: function (jqXHR, textStatus, errorThrown) {
@@ -127,13 +140,23 @@ function editarFabricante(id) {
       );
     },
     complete: function () {
-      $("#cad_fabricante").removeClass("update").addClass("insert");
       $("#novoModal").LoadingOverlay("hide");
     },
   });
 }
 
+function getFabricante(id) {
+  $("#mdExcluir").modal("show");
+  $("#codigo").text(id);
+  console.log("codigo: " + id);
+}
+
 $("#lista-fabricante").on("click", "#fabri", function () {
   const id = $(this).data("id");
   editarFabricante(id);
+});
+
+$("#lista-fabricante").on("click", "#delfabri", function () {
+  const id = $(this).data("id");
+  getFabricante(id);
 });

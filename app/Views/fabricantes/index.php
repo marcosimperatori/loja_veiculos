@@ -3,6 +3,7 @@
 <?php echo $this->section('conteudo'); ?>
 
 
+
 <!-- Content Header (Page header) -->
 <div class="content-header">
   <div class="container-fluid">
@@ -17,6 +18,7 @@
         </ol>
       </div><!-- /.col -->
     </div><!-- /.row -->
+    <?php echo $this->include('layouts/mensagem'); ?>
   </div><!-- /.container-fluid -->
 </div>
 <!-- /.content-header -->
@@ -53,7 +55,7 @@
 </div>
 <!-- /.content -->
 
-<!-- Modal -->
+<!-- Modal insert/update -->
 <div class="modal fade" id="novoModal" tabindex="-1" role="dialog" aria-labelledby="novoModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -70,6 +72,7 @@
             <span class="sr-only">Loading...</span>
           </div>
         </div>
+        <p id="response"></p>
 
         <!-- Conteúdo do modal -->
         <?php echo form_open('/', ['id' => 'cad_fabricante', 'class' => 'insert']) ?>
@@ -80,6 +83,35 @@
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         </div>
         <?php form_close(); ?>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal deletar -->
+<div class="modal fade" id="mdExcluir" tabindex="-1" role="dialog" aria-labelledby="novoModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="novoModalLabel">Exclusão de fabricante</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <p id="response"></p>
+
+        <!-- Conteúdo do modal -->
+        <p id="codigo" name="id1"></p>
+
+        <input type="hidden" name="id" id="id">
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-danger">Excluir</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        </div>
+
       </div>
     </div>
   </div>
