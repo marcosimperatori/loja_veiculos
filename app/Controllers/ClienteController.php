@@ -50,6 +50,53 @@ class ClienteController extends BaseController
         return $this->response->setJSON($retorno);
     }
 
+    public function criar()
+    {
+        $cliente = new \App\Entities\Cliente();
+
+        $data = [
+            'titulo' => "Criando novo cliente",
+            'cliente' => $cliente
+        ];
+
+        return view('cliente/criar', $data);
+    }
+
+    public function cadastrar()
+    {
+        //garatindo que este método seja chamado apenas via ajax
+        if (!$this->request->isAJAX()) {
+            return redirect()->back();
+        }
+
+        //atualiza o token do formulário
+        $retorno['token'] = csrf_hash();
+
+        //recuperando os dados que vieram na requisiçao
+        $post = $this->request->getPost();
+
+        //Criando um novo objeto da entidade cliente
+        $cliente = new \App\Entities\Cliente($post);
+        $cliente->ativo = true;
+
+        if ($this->clienteModel->protect(false)->save($cliente)) {
+
+            //captura o id do cliente que acabou de ser inserido no banco de dados
+            $retorno['id'] = $this->clienteModel->getInsertID();
+            $NovoCliente = $this->buscaClienteOu404($retorno['id']);
+            session()->setFlashdata('sucesso', "O cliente ($NovoCliente->nome) foi incluído no sistema");
+            $retorno['redirect_url'] = base_url('clientes');
+
+            return $this->response->setJSON($retorno);
+        }
+
+        //se chegou até aqui, é porque tem erros de validação
+        $retorno['erro'] = "Verifique os aviso de erro e tente novamente";
+        $retorno['erros_model'] = $this->clienteModel->errors();
+
+        return $this->response->setJSON($retorno);
+    }
+
     private function buscaClienteOu404(int $id = null)
     {
         //vai considerar inclusive os registros excluídos (softdelete)

@@ -12,7 +12,7 @@ class ClienteModel extends Model
     protected $returnType       = '\App\Entities\Cliente';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id', 'ativo', 'cnpj_cpf', 'emailcli', 'nomecli', 'telefone', 'ultima_compra'];
+    protected $allowedFields    = ['id', 'ativo', 'cnpj_cpf', 'email', 'nome', 'telefone', 'ultima_compra'];
 
     protected bool $allowEmptyInserts = false;
 
@@ -26,13 +26,13 @@ class ClienteModel extends Model
     // Validation
     // Validation
     protected $validationRules      = [
-        'nomecli'      => 'required|min_length[3]|max_length[250]|is_unique[cliente.nomecli,id,{$id}]',
-        'cnpj_cpf'       => 'exact_length[14,18]|is_unique[clientes.cnpj_cpf,id,{$id}]',
-        'emailcli'      => 'permit_empty',
+        'nome'      => 'required|min_length[3]|max_length[250]|is_unique[cliente.nome,id,{$id}]',
+        'cnpj_cpf'  => 'exact_length[14,18]|is_unique[cliente.cnpj_cpf,id,{$id}]',
+        'email'     => 'permit_empty',
     ];
 
     protected $validationMessages   = [
-        'nomecli' => [
+        'nome' => [
             'required'   => 'A razão social é obrigatória.',
             'min_length' => 'A razão social precisa ter ao menos 03 caracteres.',
             'max_length' => 'A razão social pode ter no máximo 250 caracteres.',

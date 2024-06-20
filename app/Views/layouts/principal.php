@@ -373,6 +373,8 @@
   <script src="<?= base_url('assets/plugins/datatables-buttons/js/buttons.html5.min.js') ?>"></script>
   <script src="<?= base_url('assets/plugins/datatables-buttons/js/buttons.print.min.js') ?>"></script>
   <script src="<?= base_url('assets/plugins/datatables-buttons/js/buttons.colVis.min.js') ?>"></script>
+  <script src="<?php echo site_url("assets/jquery/jquery.validate.js"); ?>"></script>
+  <script src="<?php echo site_url('assets/jquery/jquery.mask.min.js'); ?>"></script>
 
   <!-- overlay -->
   <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
@@ -409,6 +411,7 @@
       },
     };
   </script>
+  <script src="<?php echo base_url("assets/js/comons.js") ?>"></script>
 
   <?php echo $this->renderSection('scripts'); ?>
 

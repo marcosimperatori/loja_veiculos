@@ -17,6 +17,7 @@
         </ol>
       </div><!-- /.col -->
     </div><!-- /.row -->
+    <?php echo $this->include('layouts/mensagem'); ?>
   </div><!-- /.container-fluid -->
 </div>
 <!-- /.content-header -->

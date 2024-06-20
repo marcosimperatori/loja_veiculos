@@ -53,6 +53,16 @@ $(function () {
     ],
     columnDefs: [
       {
+        width: "350px",
+        className: "text-left",
+        targets: [1],
+      },
+      {
+        width: "110px",
+        className: "text-center",
+        targets: [2],
+      },
+      {
         width: "70px",
         className: "text-center",
         targets: [3],
@@ -70,98 +80,62 @@ $(function () {
 
 $("#form_cad_cliente").on("submit", function (e) {
   e.preventDefault();
+  let url = "";
 
-  const fabricanteValue = $("#idfabricante").val();
-  const combustivelValue = $("#combustivel").val();
-  const tipoValue = $("#idtipo").val();
-
-  if (fabricanteValue === "") {
-    $("#response").html(
-      '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
-        "Selecione o fabricante!" +
-        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-        '<span aria-hidden="true">&times;</span>' +
-        "</button>" +
-        "</div>"
-    );
-    return false;
-  } else if (tipoValue === "") {
-    $("#response").html(
-      '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
-        "Selecione o tipo de veículo" +
-        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-        '<span aria-hidden="true">&times;</span>' +
-        "</button>" +
-        "</div>"
-    );
-    return false;
-  } else if (combustivelValue === "") {
-    $("#response").html(
-      '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
-        "Selecione o tipo de combustível" +
-        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-        '<span aria-hidden="true">&times;</span>' +
-        "</button>" +
-        "</div>"
-    );
-    return false;
-  } else {
-    let url = "";
-
-    if ($("#form_cad_veiculo").hasClass("insert")) {
-      url = "/veiculos/inserir";
-    } else if ($("#form_cad_veiculo").hasClass("update")) {
-      url = "/veiculos/atualizar";
-    }
-
-    $.ajax({
-      type: "POST",
-      url: url,
-      data: new FormData(this),
-      dataType: "json",
-      contentType: false,
-      cache: false,
-      processData: false,
-      beforeSend: function () {
-        $("#response").html("");
-        $("#form_cad_veiculo").LoadingOverlay("show", {
-          background: "rgba(165, 190, 100, 0.5)",
-        });
-      },
-      success: function (data) {
-        $("[name=csrf_test_name]").val(data.token);
-
-        if (data.info) {
-          $("#response").html(
-            '<div class="alert alert-warning alert-dismissible fade show" role="alert">' +
-              data.info +
-              '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-              '<span aria-hidden="true">&times;</span>' +
-              "</button>" +
-              "</div>"
-          );
-        } else if (data.erro && data.erros_model.modelo) {
-          $("#response").html(
-            '<div class="text-danger" style="font-size: 13px; margin-top:8px">' +
-              data.erros_model.modelo +
-              "</div>"
-          );
-        } else {
-          console.log(data);
-          //tudo certo na atualização, redirecionar o usuário
-          window.location.href = data.redirect_url;
-        }
-      },
-      error: function () {
-        alert(
-          "Não foi possível concluir a operação, tente novamente mais tarde!"
-        );
-      },
-      complete: function () {
-        $("#form_cad_veiculo").LoadingOverlay("hide");
-      },
-    });
+  if ($("#form_cad_cliente").hasClass("insert")) {
+    url = "/clientes/inserir";
+  } else if ($("#form_cad_cliente").hasClass("update")) {
+    url = "/clientes/atualizar";
   }
+  console.log(url);
+
+  $.ajax({
+    type: "POST",
+    url: url,
+    data: new FormData(this),
+    dataType: "json",
+    contentType: false,
+    cache: false,
+    processData: false,
+    beforeSend: function () {
+      $("#response").html("");
+      $("#form_cad_veiculo").LoadingOverlay("show", {
+        background: "rgba(165, 190, 100, 0.5)",
+      });
+    },
+    success: function (data) {
+      $("[name=csrf_test_name]").val(data.token);
+
+      if (data.info) {
+        $("#response").html(
+          '<div class="alert alert-warning alert-dismissible fade show" role="alert">' +
+            data.info +
+            '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+            '<span aria-hidden="true">&times;</span>' +
+            "</button>" +
+            "</div>"
+        );
+      } else if (data.erro && data.erros_model.nome) {
+        $("#response").html(
+          '<div class="text-danger" style="font-size: 13px; margin-top:8px">' +
+            data.erros_model.nome +
+            "</div>"
+        );
+      } else {
+        console.log(data);
+        //tudo certo na atualização, redirecionar o usuário
+        window.location.href = data.redirect_url;
+      }
+    },
+    error: function () {
+      alert(
+        "Não foi possível concluir a operação, tente novamente mais tarde!"
+      );
+    },
+    complete: function () {
+      $("#form_cad_veiculo").LoadingOverlay("hide");
+    },
+  });
 });
 
 function camposObrigatorios() {}
