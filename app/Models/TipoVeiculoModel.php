@@ -6,10 +6,10 @@ use CodeIgniter\Model;
 
 class TipoVeiculoModel extends Model
 {
-    protected $table            = 'tipoveiculos';
+    protected $table            = 'veiculo_tipo';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
-    protected $returnType       = '\Entities\TiposVeiculo';
+    protected $returnType       = '\App\Entities\TiposVeiculo';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = ['descricao', 'ativo'];

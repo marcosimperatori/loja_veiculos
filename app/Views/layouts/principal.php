@@ -269,7 +269,7 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="pages/layout/top-nav.html" class="nav-link">
+                  <a href="<?= base_url('/veiculos') ?>" class="nav-link">
                     <i class="fa fa-long-arrow-right"></i>
                     <p>Veículos</p>
                   </a>

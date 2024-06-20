@@ -6,10 +6,10 @@ use CodeIgniter\Model;
 
 class ModeloModel extends Model
 {
-    protected $table            = 'modelos';
+    protected $table            = 'veiculo_modelo';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
-    protected $returnType       = '\Entities\Veiculo';
+    protected $returnType       = '\App\Entities\Veiculo';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
@@ -36,7 +36,7 @@ class ModeloModel extends Model
             'required'   => 'O modelo é obrigatória.',
             'min_length' => 'O modelo precisa ter ao menos 03 caracteres.',
             'max_length' => 'O modelo pode ter no máximo 100 caracteres.',
-            'is_unique'  => 'Este modelo já está sendo usado'
+            'is_unique'  => 'Este modelo já foi cadastrado'
         ]
     ];
 

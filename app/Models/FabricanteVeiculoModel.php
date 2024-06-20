@@ -29,11 +29,11 @@ class FabricanteVeiculoModel extends Model
     ];
 
     protected $validationMessages   = [
-        'nome' =>  [
+        'fabricante' =>  [
             'required'   => 'O nome do fabricante é obrigatório.',
             'min_length' => 'O nome precisa ter ao menos 03 caracteres.',
             'max_length' => 'O nome pode ter no máximo 90 caracteres.',
-            'is_unique'  => 'Esta descrição já está sendo usada'
+            'is_unique'  => 'Esta descrição já foi cadastrada'
         ]
     ];
 

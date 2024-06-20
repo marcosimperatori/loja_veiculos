@@ -88,7 +88,6 @@ $("#cad_fabricante").on("submit", function (e) {
     },
     success: function (data) {
       $("[name=csrf_test_name]").val(data.token);
-      console.log(data);
 
       if (data.info) {
         $("#response").html(
@@ -99,7 +98,14 @@ $("#cad_fabricante").on("submit", function (e) {
             "</button>" +
             "</div>"
         );
+      } else if (data.erro && data.erros_model.fabricante) {
+        $("#descricao_repetida").html(
+          '<div class="text-danger" style="font-size: 13px; margin-top:8px">' +
+            data.erros_model.fabricante +
+            "</div>"
+        );
       } else {
+        console.log(data);
         //tudo certo na atualização, redirecionar o usuário
         window.location.href = data.redirect_url;
       }
