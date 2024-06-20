@@ -16,7 +16,8 @@ $routes->post('/fabricantes/excluir/(:alphanum)', 'FabricanteController::deletar
 $routes->get('/fabricantes_all', 'FabricanteController::getAll'); //ajax
 
 
-$routes->get('/clientes', 'ClienteController::index');
+$routes->get('clientes', 'ClienteController::index');
+$routes->get('clientes_all', 'ClienteController::getAll'); //ajax
 
 $routes->get('veiculos', 'VeiculoController::index');
 $routes->get('veiculos_all', 'VeiculoController::getAll'); //ajax

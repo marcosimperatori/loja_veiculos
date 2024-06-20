@@ -6,15 +6,13 @@ use CodeIgniter\Model;
 
 class ClienteModel extends Model
 {
-    protected $table            = 'clientes';
+    protected $table            = 'cliente';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
-    protected $returnType       = '\Entities\Cliente';
+    protected $returnType       = '\App\Entities\Cliente';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [
-        'nome', 'telefone', 'email', 'ativo', 'foto'
-    ];
+    protected $allowedFields    = ['id', 'ativo', 'cnpj_cpf', 'emailcli', 'nomecli', 'telefone', 'ultima_compra'];
 
     protected bool $allowEmptyInserts = false;
 
@@ -26,20 +24,23 @@ class ClienteModel extends Model
     protected $deletedField  = 'deleted_at';
 
     // Validation
+    // Validation
     protected $validationRules      = [
-        'nome' => 'required|min_length[5]|max_length[60]|is_unique[cliente.nome,id,{$id}]',
-        'email' => 'required|max_length[255]|is_unique[cliente.email,id,{$id}]',
+        'nomecli'      => 'required|min_length[3]|max_length[250]|is_unique[cliente.nomecli,id,{$id}]',
+        'cnpj_cpf'       => 'exact_length[14,18]|is_unique[clientes.cnpj_cpf,id,{$id}]',
+        'emailcli'      => 'permit_empty',
     ];
 
     protected $validationMessages   = [
-        'nome' =>  [
-            'required'   => 'O nome é obrigatório.',
-            'min_length' => 'O nome precisa ter ao menos 05 caracteres.',
-            'max_length' => 'O nome pode ter no máximo 60 caracteres.',
-            'is_unique'  => 'Este nome já está sendo usado'
+        'nomecli' => [
+            'required'   => 'A razão social é obrigatória.',
+            'min_length' => 'A razão social precisa ter ao menos 03 caracteres.',
+            'max_length' => 'A razão social pode ter no máximo 250 caracteres.',
+            'is_unique'  => 'Este nome de cliente já foi cadastrado'
         ],
-        'emailcli' => [
-            'is_unique' => 'Este email já está sendo utilizado'
+        'cnpj_cpf' => [
+            'exact_length' => 'CNPJ deve ter 18 caracteres, CPF 14.',
+            'is_unique'    => 'O CNPJ|CPF já está sendo usado'
         ],
     ];
 

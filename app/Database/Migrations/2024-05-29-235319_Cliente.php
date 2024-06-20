@@ -20,6 +20,10 @@ class Cliente extends Migration
                 'constraint' => 200,
                 'null'       => false
             ],
+            'cnpj_cpf' => [
+                'type' => 'VARCHAR',
+                'constraint' => 20,
+            ],
             'telefone' => [
                 'type' => 'VARCHAR',
                 'constraint' => 15,
@@ -37,6 +41,11 @@ class Cliente extends Migration
                 'type'       => 'VARCHAR',
                 'constraint' => 255,
                 'null'       => true
+            ],
+            'ultima_compra' => [
+                'type' => 'DATE',
+                'null' => true,
+                'default' => null,
             ],
             'created_at' => [
                 'type'    => 'DATETIME',
