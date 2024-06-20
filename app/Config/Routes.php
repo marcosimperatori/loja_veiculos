@@ -20,6 +20,10 @@ $routes->get('clientes', 'ClienteController::index');
 $routes->get('clientes_all', 'ClienteController::getAll'); //ajax
 $routes->get('clientes/criar', 'ClienteController::criar');
 $routes->post('clientes/inserir', 'ClienteController::cadastrar'); //ajax
+$routes->get('clientes/editar/(:alphanum)', 'ClienteController::edit/$1');
+$routes->post('clientes/atualizar', 'ClienteController::atualizar'); //ajax
+$routes->get('clientes/deletar/(:alphanum)', 'ClienteController::deletar/$1');
+$routes->get('clientes/confirma_exclusao/(:alphanum)', 'ClienteController::confirma_exclusao/$1');
 
 $routes->get('veiculos', 'VeiculoController::index');
 $routes->get('veiculos_all', 'VeiculoController::getAll'); //ajax

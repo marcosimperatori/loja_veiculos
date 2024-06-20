@@ -97,6 +97,88 @@ class ClienteController extends BaseController
         return $this->response->setJSON($retorno);
     }
 
+    public function edit($enc_id)
+    {
+        $id = decrypt($enc_id);
+        if (!$id) {
+            return redirect()->to('home');
+        }
+
+        $cliente = $this->buscaClienteOu404($id);
+
+        $data = [
+            'titulo' => "Editando o escritório",
+            'cliente' => $cliente
+        ];
+        return view('cliente/editar', $data);
+    }
+
+    public function atualizar()
+    {
+        if (!$this->request->isAJAX()) {
+            return redirect()->back();
+        }
+
+        $retorno['token'] = csrf_hash();
+        $post = $this->request->getPost();
+        $cliente = $this->buscaClienteOu404($post['id']);
+        $cliente->fill($post);
+
+        if ($cliente->hasChanged() == false) {
+            $retorno['info'] = "Não houve alteração no registro!";
+            return $this->response->setJSON($retorno);
+        }
+
+        if ($this->clienteModel->protect(false)->save($cliente)) {
+            session()->setFlashdata('sucesso', "O cliente: $cliente->nome foi atualizado");
+            $retorno['redirect_url'] = base_url('clientes');
+            return $this->response->setJSON($retorno);
+        }
+
+        //se chegou até aqui, é porque tem erros de validação
+        $retorno['erro'] = "Verifique os aviso de erro e tente novamente";
+        $retorno['erros_model'] = $this->clienteModel->errors();
+
+        return $this->response->setJSON($retorno);
+    }
+
+    public function deletar($enc_id)
+    {
+        $id = decrypt($enc_id);
+        if (!$id) {
+            return redirect()->to('clientes');
+        }
+
+        $cliente = $this->buscaClienteOu404($id);
+        $data = [
+            'cliente' => $cliente
+        ];
+        return view('cliente/deletar', $data);
+    }
+
+    public function confirma_exclusao($enc_id)
+    {
+        $id = decrypt($enc_id);
+        if (!$id) {
+            return redirect()->to('home');
+        }
+
+        /*$vendaVinculada = $this->certificadoModel->select('id')
+            ->where('idcliente', $id)->first();*/
+
+        //if (!is_null($vendaVinculada)) {
+        //    $cliente = $this->clienteModel->find($id);
+        //    session()->setFlashdata('atencao', "O cliente " . $cliente->nomecli . " está vinculado a uma ou mais vendas, por isso não pode ser excluído");
+        //} else {
+        $cli = $this->clienteModel->find($id);
+        if ($this->clienteModel->delete($id)) {
+            session()->setFlashdata('atencao', "O veículo " . $cli->nome . " foi excluído do sistema");
+        }
+        //}
+
+        return redirect()->to('clientes');
+    }
+
     private function buscaClienteOu404(int $id = null)
     {
         //vai considerar inclusive os registros excluídos (softdelete)
