@@ -130,7 +130,6 @@ $("#form_cad_estoque").on("submit", function (e) {
             "</div>"
         );
       } else {
-        console.log(data);
         //tudo certo na atualização, redirecionar o usuário
         window.location.href = data.redirect_url;
       }

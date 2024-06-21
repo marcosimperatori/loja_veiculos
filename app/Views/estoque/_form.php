@@ -87,8 +87,8 @@
   </div>
 
   <div class="col-lg-6 col-sm-12">
-    <label for="idveiculo" class="form-label mt-2">Comprado de <small class="text-danger">*</small></label>
-    <select name="idveiculo" id="idveiculo" class="form-control ">
+    <label for="idcliente" class="form-label mt-2">Comprado de <small class="text-danger">*</small></label>
+    <select name="idcliente" id="idcliente" class="form-control ">
       <option value="" selected>Selecione...</option>
       <?php foreach ($clientes as $cliente) : ?>
         <option value="<?php echo $cliente->id; ?>" <?php echo ($cliente->id == $estoque->idcliente) ? 'selected' : ''; ?>>

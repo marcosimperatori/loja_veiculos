@@ -83,4 +83,62 @@ class EstoqueController extends BaseController
 
         return view('estoque/criar', $data);
     }
+
+    public function cadastrar()
+    {
+        //garatindo que este método seja chamado apenas via ajax
+        if (!$this->request->isAJAX()) {
+            return redirect()->back();
+        }
+
+        //atualiza o token do formulário
+        $retorno['token'] = csrf_hash();
+
+        //recuperando os dados que vieram na requisiçao
+        $post = $this->request->getPost();
+
+        //Criando um novo objeto da entidade cliente
+        $estoque = new \App\Entities\Estoque($post);
+        $estoque->iduser = 1;
+
+        if (isset($post['ar'])) {
+            $estoque->ar = 1;
+        } else {
+            $estoque->ar = 0;
+        }
+
+        if (isset($post['vidro'])) {
+            $estoque->vidro = 1;
+        } else {
+            $estoque->vidro = 0;
+        }
+
+        if (isset($post['alarme'])) {
+            $estoque->alarme = 1;
+        } else {
+            $estoque->alarme = 0;
+        }
+
+
+        if ($this->estoqueModel->protect(false)->save($estoque)) {
+
+            //captura o id do cliente que acabou de ser inserido no banco de dados
+            //$retorno['id'] = $this->clienteModel->getInsertID();
+            //$NovoCliente = $this->buscaClienteOu404($retorno['id']);
+            session()->setFlashdata('sucesso', "O veículo foi incluído no estoque");
+            $retorno['redirect_url'] = base_url('estoque');
+
+            return $this->response->setJSON($retorno);
+        } else {
+            echo "aqui<pre>";
+            var_dump($estoque);
+            die();
+        }
+
+        //se chegou até aqui, é porque tem erros de validação
+        $retorno['erro'] = "Verifique os aviso de erro e tente novamente";
+        $retorno['erros_model'] = $this->estoqueModel->errors();
+
+        return $this->response->setJSON($retorno);
+    }
 }
