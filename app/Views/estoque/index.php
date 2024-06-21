@@ -38,7 +38,6 @@
               <thead>
                 <tr>
                   <th>Veículo</th>
-                  <th>Versão</th>
                   <th>Ano</th>
                   <th>Motor</th>
                   <th>Ações</th>

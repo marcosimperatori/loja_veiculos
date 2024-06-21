@@ -7,6 +7,7 @@ use App\Models\ClienteModel;
 use App\Models\EstoqueModel;
 use App\Models\ModeloModel;
 use CodeIgniter\HTTP\ResponseInterface;
+use Exception;
 
 class EstoqueController extends BaseController
 {
@@ -52,9 +53,8 @@ class EstoqueController extends BaseController
         foreach ($veiculos as $veiculo) {
             $id = encrypt($veiculo->id);
             $data[] = [
-                'nome'   => $veiculo->modelo,
+                'nome'   => $veiculo->modelo . ' - ' . $veiculo->versao,
                 'ano'    => $veiculo->ano,
-                'versao' => $veiculo->versao,
                 'motor'  => $veiculo->motor,
                 'acoes'  => '<a href="' . base_url("estoque/editar/$id") . '" title="Editar"><i class="fas fa-edit text-success"></i></a> &nbsp; 
                              <a href="' . base_url("estoque/deletar/$id") . '" title="Excluir"><i class="fas fa-trash-alt text-danger"></i></a>'
@@ -119,19 +119,24 @@ class EstoqueController extends BaseController
             $estoque->alarme = 0;
         }
 
+        $estoque->disponivel = 1;
+        $estoque->vendido = 'n';
+        $estoque->reservado = 'n';
 
-        if ($this->estoqueModel->protect(false)->save($estoque)) {
+        try {
+            if ($this->estoqueModel->protect(false)->save($estoque)) {
 
-            //captura o id do cliente que acabou de ser inserido no banco de dados
-            //$retorno['id'] = $this->clienteModel->getInsertID();
-            //$NovoCliente = $this->buscaClienteOu404($retorno['id']);
-            session()->setFlashdata('sucesso', "O veículo foi incluído no estoque");
-            $retorno['redirect_url'] = base_url('estoque');
+                //captura o id do cliente que acabou de ser inserido no banco de dados
+                //$retorno['id'] = $this->clienteModel->getInsertID();
+                //$NovoCliente = $this->buscaClienteOu404($retorno['id']);
+                session()->setFlashdata('sucesso', "O veículo foi incluído no estoque");
+                $retorno['redirect_url'] = base_url('estoque');
 
-            return $this->response->setJSON($retorno);
-        } else {
-            echo "aqui<pre>";
-            var_dump($estoque);
+                return $this->response->setJSON($retorno);
+            }
+        } catch (Exception $e) {
+            echo "exception <pre>";
+            var_dump($e);
             die();
         }
 

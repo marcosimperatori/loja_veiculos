@@ -45,9 +45,6 @@ $(function () {
         data: "ano",
       },
       {
-        data: "versao",
-      },
-      {
         data: "motor",
       },
       {
@@ -56,7 +53,7 @@ $(function () {
     ],
     columnDefs: [
       {
-        width: "350px",
+        width: "80px",
         className: "text-left",
         targets: [1],
       },
@@ -69,11 +66,6 @@ $(function () {
         width: "70px",
         className: "text-center",
         targets: [3],
-      },
-      {
-        width: "70px",
-        className: "text-center",
-        targets: [4],
       },
     ],
   });
@@ -129,6 +121,8 @@ $("#form_cad_estoque").on("submit", function (e) {
             data.erros_model.nome +
             "</div>"
         );
+      } else if (data.erro) {
+        alert("Existe erro de validação: " + data.erros_model);
       } else {
         //tudo certo na atualização, redirecionar o usuário
         window.location.href = data.redirect_url;

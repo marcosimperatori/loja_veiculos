@@ -82,6 +82,11 @@
   </div>
 
   <div class="form-group col-lg-2 col-sm-12">
+    <label for="data_compra" class="form-label mt-2">Data</label>
+    <input type="date" class="form-control" id="data_compra" name="data_compra" value="<?php echo $estoque->data_compra ?>">
+  </div>
+
+  <div class="form-group col-lg-2 col-sm-12">
     <label for="preco_compra" class="form-label mt-2">Preço compra <small class="text-danger">*</small></label>
     <input type="text" class="form-control money" id="preco_compra" aria-describedby="preco_compra" name="preco_compra" value="<?php echo esc($estoque->preco_compra); ?>">
   </div>
