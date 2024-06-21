@@ -146,4 +146,24 @@ class EstoqueController extends BaseController
 
         return $this->response->setJSON($retorno);
     }
+
+    public function edit($enc_id)
+    {
+        $id = decrypt($enc_id);
+        if (!$id) {
+            return redirect()->to('estoque');
+        }
+
+        $estoque = $this->estoqueModel->find($id);
+        $clientes = $this->getClientes();
+        $veiculos = $this->getVeiculos();
+
+        $data = [
+            'titulo' => "Editando item no estoque",
+            'estoque' => $estoque,
+            'clientes' => $clientes,
+            'veiculos' => $veiculos
+        ];
+        return view('estoque/editar', $data);
+    }
 }

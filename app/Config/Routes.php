@@ -39,3 +39,4 @@ $routes->get('estoque', 'EstoqueController::index');
 $routes->get('estoque_all', 'EstoqueController::getAll'); //ajax
 $routes->get('estoque/criar', 'EstoqueController::criar');
 $routes->post('estoque/inserir', 'EstoqueController::cadastrar'); //ajax
+$routes->get('estoque/editar/(:alphanum)', 'EstoqueController::edit/$1');

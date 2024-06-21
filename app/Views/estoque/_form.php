@@ -41,15 +41,15 @@
     <label for="tipo" class="form-label mt-2">Tipo <small class="text-danger">*</small></label>
     <select name="tipo" id="tipo" class="form-control ">
       <option value="" selected>Selecione...</option>
-      <option value="Hatch" <?php echo ($veiculo->tipo === "Hatch") ? 'selected' : ''; ?>>Hatch</option>
-      <option value="Sedan" <?php echo ($veiculo->tipo === "Sedan") ? 'selected' : ''; ?>>Sedan</option>
-      <option value="SUV" <?php echo ($veiculo->tipo === "SUV") ? 'selected' : ''; ?>>SUV</option>
-      <option value="Crossover" <?php echo ($veiculo->tipo === "Crossover") ? 'selected' : ''; ?>>Crossover</option>
-      <option value="Coupe" <?php echo ($veiculo->tipo === "Coupe") ? 'selected' : ''; ?>>Coupe</option>
-      <option value="Convertible" <?php echo ($veiculo->tipo === "Convertible") ? 'selected' : ''; ?>>Convertible</option>
-      <option value="Minivan" <?php echo ($veiculo->tipo === "Minivan") ? 'selected' : ''; ?>>Minivan</option>
-      <option value="Station Wagon" <?php echo ($veiculo->tipo === "Station Wagon") ? 'selected' : ''; ?>>Station Wagon</option>
-      <option value="Outro" <?php echo ($veiculo->tipo === "Outro") ? 'selected' : ''; ?>>Outro</option>
+      <option value="Hatch" <?php echo ($estoque->tipo === "Hatch") ? 'selected' : ''; ?>>Hatch</option>
+      <option value="Sedan" <?php echo ($estoque->tipo === "Sedan") ? 'selected' : ''; ?>>Sedan</option>
+      <option value="SUV" <?php echo ($estoque->tipo === "SUV") ? 'selected' : ''; ?>>SUV</option>
+      <option value="Crossover" <?php echo ($estoque->tipo === "Crossover") ? 'selected' : ''; ?>>Crossover</option>
+      <option value="Coupe" <?php echo ($estoque->tipo === "Coupe") ? 'selected' : ''; ?>>Coupe</option>
+      <option value="Convertible" <?php echo ($estoque->tipo === "Convertible") ? 'selected' : ''; ?>>Convertible</option>
+      <option value="Minivan" <?php echo ($estoque->tipo === "Minivan") ? 'selected' : ''; ?>>Minivan</option>
+      <option value="Station Wagon" <?php echo ($estoque->tipo === "Station Wagon") ? 'selected' : ''; ?>>Station Wagon</option>
+      <option value="Outro" <?php echo ($estoque->tipo === "Outro") ? 'selected' : ''; ?>>Outro</option>
     </select>
   </div>
 
@@ -57,14 +57,14 @@
     <label for="combustivel" class="form-label mt-2">Combustível <small class="text-danger">*</small></label>
     <select name="combustivel" id="combustivel" class="form-control ">
       <option value="" selected>Selecione...</option>
-      <option value="Gasolina" <?php echo ($veiculo->combustivel === "Gasolina") ? 'selected' : ''; ?>>Gasolina</option>
-      <option value="Etanol" <?php echo ($veiculo->combustivel === "Etanol") ? 'selected' : ''; ?>>Etanol</option>
-      <option value="Diesel" <?php echo ($veiculo->combustivel === "Diesel") ? 'selected' : ''; ?>>Diesel</option>
-      <option value="Flex" <?php echo ($veiculo->combustivel === "Flex") ? 'selected' : ''; ?>>Flex</option>
-      <option value="GNV" <?php echo ($veiculo->combustivel === "GNV") ? 'selected' : ''; ?>>GNV</option>
-      <option value="Elétrico" <?php echo ($veiculo->combustivel === "Elétrico") ? 'selected' : ''; ?>>Elétrico</option>
-      <option value="Híbrido" <?php echo ($veiculo->combustivel === "Híbrido") ? 'selected' : ''; ?>>Híbrido</option>
-      <option value="Híbrido Plug-in" <?php echo ($veiculo->combustivel === "Híbrido Plug-in") ? 'selected' : ''; ?>>Híbrido Plug-in</option>
+      <option value="Gasolina" <?php echo ($estoque->combustivel === "Gasolina") ? 'selected' : ''; ?>>Gasolina</option>
+      <option value="Etanol" <?php echo ($estoque->combustivel === "Etanol") ? 'selected' : ''; ?>>Etanol</option>
+      <option value="Diesel" <?php echo ($estoque->combustivel === "Diesel") ? 'selected' : ''; ?>>Diesel</option>
+      <option value="Flex" <?php echo ($estoque->combustivel === "Flex") ? 'selected' : ''; ?>>Flex</option>
+      <option value="GNV" <?php echo ($estoque->combustivel === "GNV") ? 'selected' : ''; ?>>GNV</option>
+      <option value="Elétrico" <?php echo ($estoque->combustivel === "Elétrico") ? 'selected' : ''; ?>>Elétrico</option>
+      <option value="Híbrido" <?php echo ($estoque->combustivel === "Híbrido") ? 'selected' : ''; ?>>Híbrido</option>
+      <option value="Híbrido Plug-in" <?php echo ($estoque->combustivel === "Híbrido Plug-in") ? 'selected' : ''; ?>>Híbrido Plug-in</option>
     </select>
   </div>
 
@@ -75,9 +75,9 @@
     <label for="direcao" class="form-label mt-2">Direção</label>
     <select name="direcao" id="direcao" class="form-control ">
       <option value="Manual" selected>Manual</option>
-      <option value="Hidráulica" <?php echo ($veiculo->direcao === "Hidráulica") ? 'selected' : ''; ?>>Hidráulica</option>
-      <option value="Elétrica" <?php echo ($veiculo->direcao === "Elétrica") ? 'selected' : ''; ?>>Elétrica</option>
-      <option value="Eletro-hidráulica" <?php echo ($veiculo->direcao === "Eletro-hidráulica") ? 'selected' : ''; ?>>Eletro-hidráulica</option>
+      <option value="Hidráulica" <?php echo ($estoque->direcao === "Hidráulica") ? 'selected' : ''; ?>>Hidráulica</option>
+      <option value="Elétrica" <?php echo ($estoque->direcao === "Elétrica") ? 'selected' : ''; ?>>Elétrica</option>
+      <option value="Eletro-hidráulica" <?php echo ($estoque->direcao === "Eletro-hidráulica") ? 'selected' : ''; ?>>Eletro-hidráulica</option>
     </select>
   </div>
 
