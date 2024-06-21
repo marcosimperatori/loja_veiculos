@@ -123,6 +123,12 @@ class EstoqueController extends BaseController
         $estoque->vendido = 'n';
         $estoque->reservado = 'n';
 
+        // Remove máscara dos valores monetários e substitui a vírgula pelo ponto
+        if (isset($post['preco_compra'])) {
+            $post['preco_compra'] = str_replace('.', '', $post['preco_compra']);
+            $post['preco_compra'] = str_replace(',', '.', $post['preco_compra']);
+        }
+
         try {
             if ($this->estoqueModel->protect(false)->save($estoque)) {
 
@@ -165,5 +171,101 @@ class EstoqueController extends BaseController
             'veiculos' => $veiculos
         ];
         return view('estoque/editar', $data);
+    }
+
+    public function atualizar()
+    {
+        if (!$this->request->isAJAX()) {
+            return redirect()->back();
+        }
+
+        $retorno['token'] = csrf_hash();
+        $post = $this->request->getPost();
+
+        // Normaliza os valores dos checkboxes
+        $post['ar'] = isset($post['ar']) ? '1' : '0';
+        $post['vidro'] = isset($post['vidro']) ? '1' : '0';
+        $post['alarme'] = isset($post['alarme']) ? '1' : '0';
+
+        // Remove máscara dos valores monetários e substitui a vírgula pelo ponto
+        if (isset($post['preco_compra'])) {
+            $post['preco_compra'] = str_replace('.', '', $post['preco_compra']);
+            $post['preco_compra'] = str_replace(',', '.', $post['preco_compra']);
+        }
+
+        $estoque = $this->estoqueModel->find($post['id']);
+
+        // Adiciona declarações de depuração
+        log_message('debug', 'Dados do POST: ' . json_encode($post));
+        log_message('debug', 'Dados antes do fill: ' . json_encode($estoque->toArray()));
+
+        $estoque->fill($post);
+
+        log_message('debug', 'Dados depois do fill: ' . json_encode($estoque->toArray()));
+
+        if ($estoque->hasChanged() == false) {
+            $retorno['info'] = "Não houve alteração no registro!";
+            return $this->response->setJSON($retorno);
+        }
+
+        if ($this->estoqueModel->protect(false)->save($estoque)) {
+            session()->setFlashdata('sucesso', "O estoque foi atualizado");
+            $retorno['redirect_url'] = base_url('estoque');
+            return $this->response->setJSON($retorno);
+        }
+
+        //se chegou até aqui, é porque tem erros de validação
+        $retorno['erro'] = "Verifique os aviso de erro e tente novamente";
+        $retorno['erros_model'] = $this->estoqueModel->errors();
+
+        return $this->response->setJSON($retorno);
+    }
+
+    public function deletar($enc_id)
+    {
+        $id = decrypt($enc_id);
+        if (!$id) {
+            return redirect()->to('estoque');
+        }
+
+        $estoque = $this->buscaEstoqueOu404($id);
+        $data = [
+            'estoque' => $estoque
+        ];
+        return view('estoque/deletar', $data);
+    }
+
+    public function confirma_exclusao($enc_id)
+    {
+        $id = decrypt($enc_id);
+        if (!$id) {
+            return redirect()->to('estoque');
+        }
+
+        /*$vendaVinculada = $this->certificadoModel->select('id')
+            ->where('idcliente', $id)->first();*/
+
+        //if (!is_null($vendaVinculada)) {
+        //$cliente = $this->clienteModel->find($id);
+        // session()->setFlashdata('atencao', "O cliente " . $cliente->nomecli . " está vinculado a uma ou mais vendas, por isso não pode ser excluído");
+        //} else {
+
+        if ($this->estoqueModel->delete($id)) {
+            session()->setFlashdata('atencao', "O veículo foi excluído do estoque");
+        }
+        //}
+
+        return redirect()->to('estoque');
+    }
+
+    private function buscaEstoqueOu404(int $id = null)
+    {
+        //vai considerar inclusive os registros excluídos (softdelete)
+        if (!$id || !$cliente = $this->estoqueModel
+            ->select('estoque.id,estoque.versao, estoque.motor,veiculo_modelo.modelo')->join('veiculo_modelo', 'veiculo_modelo.id = estoque.idveiculo')->find($id)) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("Cliente não encontrado com o ID: $id");
+        }
+
+        return $cliente;
     }
 }

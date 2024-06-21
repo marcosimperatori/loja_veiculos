@@ -15,7 +15,6 @@ $routes->get('/fabricantes/editar/(:alphanum)', 'FabricanteController::edit/$1')
 $routes->post('/fabricantes/excluir/(:alphanum)', 'FabricanteController::deletar/$1'); //ajax
 $routes->get('/fabricantes_all', 'FabricanteController::getAll'); //ajax
 
-
 $routes->get('clientes', 'ClienteController::index');
 $routes->get('clientes_all', 'ClienteController::getAll'); //ajax
 $routes->get('clientes/criar', 'ClienteController::criar');
@@ -34,9 +33,11 @@ $routes->post('veiculos/atualizar', 'VeiculoController::atualizar');
 $routes->get('veiculos/deletar/(:alphanum)', 'VeiculoController::deletar/$1');
 $routes->get('veiculos/confirma_exclusao/(:alphanum)', 'VeiculoController::confirma_exclusao/$1');
 
-
 $routes->get('estoque', 'EstoqueController::index');
 $routes->get('estoque_all', 'EstoqueController::getAll'); //ajax
 $routes->get('estoque/criar', 'EstoqueController::criar');
 $routes->post('estoque/inserir', 'EstoqueController::cadastrar'); //ajax
 $routes->get('estoque/editar/(:alphanum)', 'EstoqueController::edit/$1');
+$routes->post('estoque/atualizar', 'EstoqueController::atualizar'); //ajax
+$routes->get('estoque/deletar/(:alphanum)', 'EstoqueController::deletar/$1');
+$routes->get('estoque/confirma_exclusao/(:alphanum)', 'EstoqueController::confirma_exclusao/$1');

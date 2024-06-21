@@ -106,21 +106,21 @@
 <div class="row mt-3">
   <div class="form-group">
     <div class="custom-control custom-checkbox">
-      <input type="checkbox" name="ar" id="ar" class="custom-control-input">
-      <label for="ar" class="custom-control-label mr-3">Ar condicionado</label>
+      <input type="checkbox" name="ar" id="ar" class="custom-control-input" <?php echo ($estoque->ar === "1") ? 'checked' : ''; ?>>
+      <label for="ar" class="custom-control-label mr-3" >Ar condicionado</label>
     </div>
   </div>
 
   <div class="form-group">
     <div class="custom-control custom-checkbox">
-      <input type="checkbox" name="vidro" id="vidro" class="custom-control-input">
+      <input type="checkbox" name="vidro" id="vidro" class="custom-control-input" <?php echo ($estoque->vidro === "1") ? 'checked' : ''; ?>>
       <label for="vidro" class="custom-control-label mr-3">Vidro-elétrico</label>
     </div>
   </div>
 
   <div class="form-group">
     <div class="custom-control custom-checkbox">
-      <input type="checkbox" name="alarme" id="alarme" class="custom-control-input">
+      <input type="checkbox" name="alarme" id="alarme" class="custom-control-input" <?php echo ($estoque->alarme === "1") ? 'checked' : ''; ?>>
       <label for="alarme" class="custom-control-label mr-3">Alarme/Trava</label>
     </div>
   </div>
