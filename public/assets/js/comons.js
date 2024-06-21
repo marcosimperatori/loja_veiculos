@@ -1,5 +1,5 @@
 $(function () {
-  $(".money").mask("###,###.00", { reverse: true });
+  $(".money").mask("###.###.###.###.###,00", { reverse: true });
   $(".peso").mask("#.000", { reverse: true }); //Peso do produto
   $(".cep").mask("00000-000");
   $(".cpf").mask("000.000.000-00", { reverse: false });

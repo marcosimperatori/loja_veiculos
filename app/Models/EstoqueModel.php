@@ -6,15 +6,16 @@ use CodeIgniter\Model;
 
 class EstoqueModel extends Model
 {
-    protected $table            = 'estoques';
+    protected $table            = 'estoque';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
-    protected $returnType       = '\Entities\Estoque';
+    protected $returnType       = '\App\Entities\Estoque';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
         'iduser', 'idcliente', 'idveiculo', 'data_compra', 'preco_compra',
-        'vendido', 'reservado'
+        'vendido', 'reservado', 'obs', 'ano', 'portas', 'motor', 'versao', 'disponivel',
+        'cor', 'tipo', 'combustivel', 'direcao', 'ar', 'vidro', 'alarme'
     ];
 
     protected bool $allowEmptyInserts = false;

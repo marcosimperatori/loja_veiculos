@@ -1,5 +1,5 @@
 $(function () {
-  const table = $("#lista-clientes").DataTable({
+  const table = $("#lista-estoque").DataTable({
     oLanguage: DATATABLE_PTBR,
     responsive: true,
     lengthChange: true,
@@ -12,7 +12,7 @@ $(function () {
       {
         text: "Novo",
         action: function (e, dt, node, config) {
-          window.location.href = "/clientes/criar";
+          window.location.href = "/estoque/criar";
         },
         className: "bg-gradient-primary",
       },
@@ -27,14 +27,14 @@ $(function () {
       },
     ],
     ajax: {
-      url: "clientes_all",
+      url: "estoque_all",
       beforeSend: function () {
-        $("#lista-clientes").LoadingOverlay("show", {
+        $("#lista-estoque").LoadingOverlay("show", {
           background: "rgba(165, 190, 100, 0.5)",
         });
       },
       complete: function () {
-        $("#lista-clientes").LoadingOverlay("hide");
+        $("#lista-estoque").LoadingOverlay("hide");
       },
     },
     columns: [
@@ -42,10 +42,13 @@ $(function () {
         data: "nome",
       },
       {
-        data: "email",
+        data: "ano",
       },
       {
-        data: "telefone",
+        data: "versao",
+      },
+      {
+        data: "motor",
       },
       {
         data: "acoes",
@@ -58,7 +61,7 @@ $(function () {
         targets: [1],
       },
       {
-        width: "110px",
+        width: "70px",
         className: "text-center",
         targets: [2],
       },
@@ -67,6 +70,11 @@ $(function () {
         className: "text-center",
         targets: [3],
       },
+      {
+        width: "70px",
+        className: "text-center",
+        targets: [4],
+      },
     ],
   });
 
@@ -74,18 +82,18 @@ $(function () {
     table
       .buttons()
       .container()
-      .appendTo("#lista-clientes_wrapper .col-md-6:eq(0)");
+      .appendTo("#lista-estoque_wrapper .col-md-6:eq(0)");
   });
 });
 
-$("#form_cad_cliente").on("submit", function (e) {
+$("#form_cad_estoque").on("submit", function (e) {
   e.preventDefault();
   let url = "";
 
-  if ($("#form_cad_cliente").hasClass("insert")) {
-    url = "/clientes/inserir";
-  } else if ($("#form_cad_cliente").hasClass("update")) {
-    url = "/clientes/atualizar";
+  if ($("#form_cad_estoque").hasClass("insert")) {
+    url = "/estoque/inserir";
+  } else if ($("#form_cad_estoque").hasClass("update")) {
+    url = "/estoque/atualizar";
   }
   console.log(url);
 
@@ -99,7 +107,7 @@ $("#form_cad_cliente").on("submit", function (e) {
     processData: false,
     beforeSend: function () {
       $("#response").html("");
-      $("#form_cad_cliente").LoadingOverlay("show", {
+      $("#form_cad_estoque").LoadingOverlay("show", {
         background: "rgba(165, 190, 100, 0.5)",
       });
     },
@@ -133,7 +141,7 @@ $("#form_cad_cliente").on("submit", function (e) {
       );
     },
     complete: function () {
-      $("#form_cad_cliente").LoadingOverlay("hide");
+      $("#form_cad_estoque").LoadingOverlay("hide");
     },
   });
 });
@@ -143,28 +151,4 @@ function camposObrigatorios() {}
 $("#lista-fabricante").on("click", "#fabri", function () {
   const id = $(this).data("id");
   editarFabricante(id);
-});
-
-$("#removerFab").on("click", function () {
-  const id = $("#codFabricante").val();
-  $.ajax({
-    url: "fabricantes/excluir/" + id,
-    type: "POST",
-    dataType: "json",
-    beforeSend: function () {
-      $("#response").html("");
-      $("#mdExcluir").LoadingOverlay("show", {
-        background: "rgba(165, 190, 100, 0.5)",
-      });
-    },
-    success: function (data) {
-      window.location.href = data.redirect_url;
-    },
-    error: function () {
-      console.log("Erro ao tentar excluir fabricante");
-    },
-    complete: function () {
-      $("#mdExcluir").LoadingOverlay("hide");
-    },
-  });
 });

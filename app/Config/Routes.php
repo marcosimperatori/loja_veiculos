@@ -33,3 +33,8 @@ $routes->get('veiculos/editar/(:alphanum)', 'VeiculoController::edit/$1');
 $routes->post('veiculos/atualizar', 'VeiculoController::atualizar');
 $routes->get('veiculos/deletar/(:alphanum)', 'VeiculoController::deletar/$1');
 $routes->get('veiculos/confirma_exclusao/(:alphanum)', 'VeiculoController::confirma_exclusao/$1');
+
+
+$routes->get('estoque', 'EstoqueController::index');
+$routes->get('estoque_all', 'EstoqueController::getAll'); //ajax
+$routes->get('estoque/criar', 'EstoqueController::criar');

@@ -30,6 +30,62 @@ class Estoque extends Migration
                 'constraint'     => 9,
                 'unsigned'       => true
             ],
+            'disponivel' => [
+                'type'    => 'BOOLEAN',
+                'default' => true,
+            ],
+            'versao' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 150,
+                'null'    => 'true',
+            ],
+            'motor' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 50,
+                'null'    => 'true',
+            ],
+            'portas' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 10,
+                'null'    => 'true',
+            ],
+            'ano' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 10,
+                'null'    => 'true',
+            ],
+            'cor' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 80,
+                'null'    => 'true',
+            ],
+            'tipo' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 80,
+                'null'    => 'true',
+            ],
+            'combustivel' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 80,
+                'null'    => 'true',
+            ],
+            'direcao' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 80,
+                'null'    => 'true',
+            ],
+            'ar' => [
+                'type'    => 'BOOLEAN',
+                'default' => true,
+            ],
+            'vidro' => [
+                'type'    => 'BOOLEAN',
+                'default' => true,
+            ],
+            'alarme' => [
+                'type'    => 'BOOLEAN',
+                'default' => true,
+            ],
             'data_compra' => [
                 'type' => 'DATE',
                 'null' => true
@@ -38,6 +94,10 @@ class Estoque extends Migration
                 'type'       => 'DECIMAL',
                 'default'    => 0,
                 'constraint' => '11,2',
+            ],
+            'obs' => [
+                'type'       => 'TEXT',
+                'null'    => 'true',
             ],
             'vendido' => [
                 'type'       => 'VARCHAR',
