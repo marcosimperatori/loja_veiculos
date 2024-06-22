@@ -97,6 +97,12 @@ class EstoqueController extends BaseController
         //recuperando os dados que vieram na requisiçao
         $post = $this->request->getPost();
 
+        // Remove máscara dos valores monetários e substitui a vírgula pelo ponto
+        if (isset($post['preco_compra'])) {
+            $post['preco_compra'] = str_replace('.', '', $post['preco_compra']);
+            $post['preco_compra'] = str_replace(',', '.', $post['preco_compra']);
+        }
+
         //Criando um novo objeto da entidade cliente
         $estoque = new \App\Entities\Estoque($post);
         $estoque->iduser = 1;
@@ -122,12 +128,6 @@ class EstoqueController extends BaseController
         $estoque->disponivel = 1;
         $estoque->vendido = 'n';
         $estoque->reservado = 'n';
-
-        // Remove máscara dos valores monetários e substitui a vírgula pelo ponto
-        if (isset($post['preco_compra'])) {
-            $post['preco_compra'] = str_replace('.', '', $post['preco_compra']);
-            $post['preco_compra'] = str_replace(',', '.', $post['preco_compra']);
-        }
 
         try {
             if ($this->estoqueModel->protect(false)->save($estoque)) {
@@ -196,12 +196,12 @@ class EstoqueController extends BaseController
         $estoque = $this->estoqueModel->find($post['id']);
 
         // Adiciona declarações de depuração
-        log_message('debug', 'Dados do POST: ' . json_encode($post));
-        log_message('debug', 'Dados antes do fill: ' . json_encode($estoque->toArray()));
+        //log_message('debug', 'Dados do POST: ' . json_encode($post));
+        //log_message('debug', 'Dados antes do fill: ' . json_encode($estoque->toArray()));
 
         $estoque->fill($post);
 
-        log_message('debug', 'Dados depois do fill: ' . json_encode($estoque->toArray()));
+        //log_message('debug', 'Dados depois do fill: ' . json_encode($estoque->toArray()));
 
         if ($estoque->hasChanged() == false) {
             $retorno['info'] = "Não houve alteração no registro!";

@@ -85,6 +85,11 @@ $("#form_cad_estoque").on("submit", function (e) {
   const tipoValue = $("#tipo").val();
   const combustivelValue = $("#combustivel").val();
   const clienteValue = $("#idcliente").val();
+  const dataCompra = $("#data_compra").val();
+  const valorCompra = $("#preco_compra").val();
+  const isZero =
+    /^0+([,.]0+)?$/.test(valorCompra) ||
+    /^0+([.,]\d+)+[,.]0+$/.test(valorCompra);
 
   if (veiculoValue === "") {
     $("#response").html(
@@ -120,6 +125,26 @@ $("#form_cad_estoque").on("submit", function (e) {
     $("#response").html(
       '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
         "Selecione o vendedor" +
+        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+        '<span aria-hidden="true">&times;</span>' +
+        "</button>" +
+        "</div>"
+    );
+    return false;
+  } else if (dataCompra === "") {
+    $("#response").html(
+      '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
+        "Informe a data da compra" +
+        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+        '<span aria-hidden="true">&times;</span>' +
+        "</button>" +
+        "</div>"
+    );
+    return false;
+  } else if (valorCompra === "" || isZero) {
+    $("#response").html(
+      '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
+        "Informe o VALOR DA COMPRA ou preencha-o com valor diferente de zero" +
         '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
         '<span aria-hidden="true">&times;</span>' +
         "</button>" +
