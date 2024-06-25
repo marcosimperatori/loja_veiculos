@@ -15,11 +15,6 @@ class Manutencao extends Migration
                 'unsigned'       => true,
                 'auto_increment' => true
             ],
-            'iduser' => [
-                'type'           => 'INT',
-                'constraint'     => 9,
-                'unsigned'       => true
-            ],
             'idestoque' => [
                 'type'           => 'INT',
                 'constraint'     => 9,
@@ -51,7 +46,6 @@ class Manutencao extends Migration
         ]);
 
         $this->forge->addKey('id', true);
-        $this->forge->addForeignKey('iduser', 'usuarios', 'id', 'CASCADE', 'NO ACTION', 'manu_user');
         $this->forge->addForeignKey('idestoque', 'estoque', 'id', 'CASCADE', 'CASCADE', 'manu_clie');
         $this->forge->createTable('manutencao');
     }

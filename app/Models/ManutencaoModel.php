@@ -6,14 +6,14 @@ use CodeIgniter\Model;
 
 class ManutencaoModel extends Model
 {
-    protected $table            = 'manutencaos';
+    protected $table            = 'manutencao';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
-    protected $returnType       = '\Entities\Manutencao';
+    protected $returnType       = '\App\Entities\Manutencao';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
-        'iduser', 'idestoque', 'data_manu', 'preco', 'descricao'
+        'idestoque', 'data_manu', 'preco', 'descricao'
     ];
 
     protected bool $allowEmptyInserts = false;

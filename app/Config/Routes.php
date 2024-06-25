@@ -41,3 +41,6 @@ $routes->get('estoque/editar/(:alphanum)', 'EstoqueController::edit/$1');
 $routes->post('estoque/atualizar', 'EstoqueController::atualizar'); //ajax
 $routes->get('estoque/deletar/(:alphanum)', 'EstoqueController::deletar/$1');
 $routes->get('estoque/confirma_exclusao/(:alphanum)', 'EstoqueController::confirma_exclusao/$1');
+
+$routes->get('manutencao', 'ManutencaoController::index');
+$routes->post('manutencao/lancar', 'ManutencaoController::cadastrar'); //ajax

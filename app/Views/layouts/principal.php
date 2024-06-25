@@ -224,6 +224,14 @@
               </a>
             </li>
             <li class="nav-item">
+              <a href="<?php echo base_url("manutencao") ?>" class="nav-link">
+                <i class="nav-icon fa fa-wrench"></i>
+                <p>
+                  Manutenção
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-copy"></i>
                 <p>
@@ -286,12 +294,7 @@
                     <p>Clientes</p>
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a href="pages/layout/fixed-sidebar.html" class="nav-link">
-                    <i class="fa fa-long-arrow-right"></i>
-                    <p>Oficinas</p>
-                  </a>
-                </li>
+
               </ul>
             </li>
             <li></li>

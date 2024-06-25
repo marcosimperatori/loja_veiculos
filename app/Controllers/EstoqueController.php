@@ -56,7 +56,8 @@ class EstoqueController extends BaseController
                 'nome'   => $veiculo->modelo . ' - ' . $veiculo->versao,
                 'ano'    => $veiculo->ano,
                 'motor'  => $veiculo->motor,
-                'acoes'  => '<a href="' . base_url("estoque/editar/$id") . '" title="Editar"><i class="fas fa-edit text-success"></i></a> &nbsp; 
+                'acoes'  => '<a href="' . base_url("manutencao/lancar/$id") . '" title="Gasto com manutenção"><i class="fas fa-wrench"></i> </a>&nbsp
+                             <a href="' . base_url("estoque/editar/$id") . '" title="Editar"><i class="fas fa-edit text-success"></i></a> &nbsp; 
                              <a href="' . base_url("estoque/deletar/$id") . '" title="Excluir"><i class="fas fa-trash-alt text-danger"></i></a>'
             ];
         }
