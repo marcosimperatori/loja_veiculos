@@ -1,5 +1,5 @@
 $(function () {
-  const table = $("#lista-estoque").DataTable({
+  const table = $("#lista-manutencao").DataTable({
     oLanguage: DATATABLE_PTBR,
     responsive: true,
     lengthChange: true,
@@ -12,14 +12,9 @@ $(function () {
       {
         text: "Novo",
         action: function (e, dt, node, config) {
-          window.location.href = "/estoque/criar";
+          window.location.href = "/manutencao/criar";
         },
         className: "bg-gradient-primary",
-      },
-      {
-        extend: "pdf",
-        text: "Exportar para PDF ",
-        //orientation: "landscape",
       },
       {
         extend: "print",
@@ -29,12 +24,12 @@ $(function () {
     ajax: {
       url: "estoque_all",
       beforeSend: function () {
-        $("#lista-estoque").LoadingOverlay("show", {
+        $("#lista-manutencao").LoadingOverlay("show", {
           background: "rgba(165, 190, 100, 0.5)",
         });
       },
       complete: function () {
-        $("#lista-estoque").LoadingOverlay("hide");
+        $("#lista-manutencao").LoadingOverlay("hide");
       },
     },
     columns: [
@@ -74,11 +69,11 @@ $(function () {
     table
       .buttons()
       .container()
-      .appendTo("#lista-estoque_wrapper .col-md-6:eq(0)");
+      .appendTo("#lista-manutencao_wrapper .col-md-6:eq(0)");
   });
 });
 
-$("#form_cad_estoque").on("submit", function (e) {
+$("#form_cad_manutencao").on("submit", function (e) {
   e.preventDefault();
 
   const veiculoValue = $("#idveiculo").val();
@@ -154,9 +149,9 @@ $("#form_cad_estoque").on("submit", function (e) {
   } else {
     let url = "";
 
-    if ($("#form_cad_estoque").hasClass("insert")) {
+    if ($("#form_cad_manutencao").hasClass("insert")) {
       url = "/estoque/inserir";
-    } else if ($("#form_cad_estoque").hasClass("update")) {
+    } else if ($("#form_cad_manutencao").hasClass("update")) {
       url = "/estoque/atualizar";
     }
     console.log(url);
@@ -171,7 +166,7 @@ $("#form_cad_estoque").on("submit", function (e) {
       processData: false,
       beforeSend: function () {
         $("#response").html("");
-        $("#form_cad_estoque").LoadingOverlay("show", {
+        $("#form_cad_manutencao").LoadingOverlay("show", {
           background: "rgba(165, 190, 100, 0.5)",
         });
       },
@@ -206,7 +201,7 @@ $("#form_cad_estoque").on("submit", function (e) {
         );
       },
       complete: function () {
-        $("#form_cad_estoque").LoadingOverlay("hide");
+        $("#form_cad_manutencao").LoadingOverlay("hide");
       },
     });
   }
