@@ -43,7 +43,7 @@ $routes->get('estoque/deletar/(:alphanum)', 'EstoqueController::deletar/$1');
 $routes->get('estoque/confirma_exclusao/(:alphanum)', 'EstoqueController::confirma_exclusao/$1');
 
 $routes->get('manutencao', 'ManutencaoController::index');
-$routes->post('manutencao/lancar', 'ManutencaoController::cadastrar'); //ajax
+$routes->get('manutencao/lancar/(:alphanum)', 'ManutencaoController::criarAPartirDe/$1');
 $routes->get('manutencao/criar', 'ManutencaoController::criar');
 $routes->post('manutencao/inserir', 'ManutencaoController::cadastrar'); //ajax
 $routes->get('manutencao/editar/(:alphanum)', 'ManutencaoController::edit/$1');

@@ -4,17 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class ManutencaoModel extends Model
+class ManutencaoTipoModel extends Model
 {
-    protected $table            = 'manutencao';
+    protected $table            = 'manutencao_tipo';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
-    protected $returnType       = '\App\Entities\Manutencao';
+    protected $returnType       = '\App\Entities\ManutencaoTipo';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [
-        'idestoque', 'data_manu', 'preco', 'descricao', 'idtipomanut'
-    ];
+    protected $allowedFields    = [];
 
     protected bool $allowEmptyInserts = false;
 
@@ -26,24 +24,8 @@ class ManutencaoModel extends Model
     protected $deletedField  = 'deleted_at';
 
     // Validation
-    protected $validationRules      = [
-        'data_manu' => 'required',
-        'preco' => 'required',
-        'descricao' => 'required'
-    ];
-
-    protected $validationMessages   = [
-        'data_manu' =>  [
-            'required'   => 'A data é obrigatória.'
-        ],
-        'preco' =>  [
-            'required'   => 'O preço é obrigatório.'
-        ],
-        'descricao' =>  [
-            'required'   => 'Descrição é ogrigatória.'
-        ]
-    ];
-
+    protected $validationRules      = [];
+    protected $validationMessages   = [];
     protected $skipValidation       = false;
     protected $cleanValidationRules = true;
 

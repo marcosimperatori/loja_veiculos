@@ -217,9 +217,9 @@
             </li>
             <li class="nav-item">
               <a href="<?php echo base_url("estoque") ?>" class="nav-link">
-                <i class="nav-icon fa fa-wrench"></i>
+                <i class="nav-icon fas fa-cubes"></i>
                 <p>
-                  Compras
+                  Estoque
                 </p>
               </a>
             </li>

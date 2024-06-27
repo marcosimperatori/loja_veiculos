@@ -63,7 +63,7 @@ $(function () {
         targets: [2],
       },
       {
-        width: "70px",
+        width: "85px",
         className: "text-center",
         targets: [3],
       },
