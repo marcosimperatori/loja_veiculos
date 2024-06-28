@@ -163,9 +163,9 @@ $("#form_cad_manutencao").on("submit", function (e) {
         } else if (data.erro) {
           if (data.erros_data) {
             $("#msg-modal").html(
-              '<div class="text-danger" style="font-size: 13px; margin-top:8px"><p>' +
+              '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
                 data.erros_data +
-                "</p></div>"
+                "</div>"
             );
             $("#novoModal").modal("show");
           } else {

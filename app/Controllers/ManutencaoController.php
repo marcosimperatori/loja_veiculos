@@ -114,10 +114,10 @@ class ManutencaoController extends BaseController
         $post = $this->request->getPost();
 
         // Objetivo é certificar que todas as manutenções sejam posteriores a data da aquisição do veículo
-        if ($this->EAnteriorACompraVeiculo($post['idestoque'], $post['data_manu'])) {
-            $veiculo = $this->getEstoqueById($post['idestoque']);
+        $dados = $this->EAnteriorACompraVeiculo($post['idestoque'], $post['data_manu']);
 
-            $msg = "O veículo foi comprado em " . date('d/m/Y', strtotime($veiculo->data_compra));
+        if ($dados["dataInvalida"]) {
+            $msg = "O veículo foi comprado em " . date('d/m/Y', strtotime($dados["data_compra"])) . ", não é permitido lançar custos com manutenção antes da entrada do veículo no estoque.";
 
             $retorno['erro'] = "Verifique os avisos de erro e tente novamente";
             $retorno['erros_data'] = "A data informada é anterior a da aquisição do veículo. " . $msg;
@@ -156,7 +156,12 @@ class ManutencaoController extends BaseController
     {
         $est = $this->getEstoqueById($idEstoque);
 
-        return ($dataManutencao < $est->data_compra);
+        $resultado = [
+            'data_compra' => $est->data_compra,
+            'dataInvalida' => ($dataManutencao < $est->data_compra)
+        ];
+
+        return $resultado;
     }
 
     private function getEstoqueById($id = null)
