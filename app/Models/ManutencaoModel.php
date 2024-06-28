@@ -29,7 +29,6 @@ class ManutencaoModel extends Model
     protected $validationRules      = [
         'data_manu' => 'required',
         'preco' => 'required',
-        'descricao' => 'required'
     ];
 
     protected $validationMessages   = [
@@ -39,9 +38,6 @@ class ManutencaoModel extends Model
         'preco' =>  [
             'required'   => 'O preço é obrigatório.'
         ],
-        'descricao' =>  [
-            'required'   => 'Descrição é ogrigatória.'
-        ]
     ];
 
     protected $skipValidation       = false;

@@ -76,18 +76,16 @@ $(function () {
 $("#form_cad_manutencao").on("submit", function (e) {
   e.preventDefault();
 
-  const veiculoValue = $("#idveiculo").val();
-  const tipoValue = $("#tipo").val();
-  const combustivelValue = $("#combustivel").val();
-  const clienteValue = $("#idcliente").val();
-  const dataCompra = $("#data_compra").val();
-  const valorCompra = $("#preco_compra").val();
+  const veiculoValue = $("#idestoque").val();
+  const tipoValue = $("#idtipomanut").val();
+  const dataCompra = $("#data_manu").val();
+  const valorCompra = $("#preco").val();
   const isZero =
     /^0+([,.]0+)?$/.test(valorCompra) ||
     /^0+([.,]\d+)+[,.]0+$/.test(valorCompra);
 
   if (veiculoValue === "") {
-    $("#response").html(
+    $("#msg-modal").html(
       '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
         "Selecione o veículo!" +
         '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
@@ -95,41 +93,20 @@ $("#form_cad_manutencao").on("submit", function (e) {
         "</button>" +
         "</div>"
     );
+    $("#novoModal").modal("show");
     return false;
   } else if (tipoValue === "") {
-    $("#response").html(
+    $("#msg-modal").html(
       '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
-        "Selecione o tipo de veículo" +
-        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-        '<span aria-hidden="true">&times;</span>' +
-        "</button>" +
+        "Selecione o tipo de manutenção realizada" +
         "</div>"
     );
-    return false;
-  } else if (combustivelValue === "") {
-    $("#response").html(
-      '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
-        "Selecione o tipo de combustível" +
-        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-        '<span aria-hidden="true">&times;</span>' +
-        "</button>" +
-        "</div>"
-    );
-    return false;
-  } else if (clienteValue === "") {
-    $("#response").html(
-      '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
-        "Selecione o vendedor" +
-        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-        '<span aria-hidden="true">&times;</span>' +
-        "</button>" +
-        "</div>"
-    );
+    $("#novoModal").modal("show");
     return false;
   } else if (dataCompra === "") {
     $("#response").html(
       '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
-        "Informe a data da compra" +
+        "Informe a data do serviço" +
         '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
         '<span aria-hidden="true">&times;</span>' +
         "</button>" +
@@ -139,7 +116,7 @@ $("#form_cad_manutencao").on("submit", function (e) {
   } else if (valorCompra === "" || isZero) {
     $("#response").html(
       '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
-        "Informe o VALOR DA COMPRA ou preencha-o com valor diferente de zero" +
+        "Informe o VALOR DA MANUTENÇÃO ou preencha-o com valor diferente de zero" +
         '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
         '<span aria-hidden="true">&times;</span>' +
         "</button>" +
@@ -150,9 +127,9 @@ $("#form_cad_manutencao").on("submit", function (e) {
     let url = "";
 
     if ($("#form_cad_manutencao").hasClass("insert")) {
-      url = "/estoque/inserir";
+      url = "/manutencao/inserir";
     } else if ($("#form_cad_manutencao").hasClass("update")) {
-      url = "/estoque/atualizar";
+      url = "/manutencao/atualizar";
     }
     console.log(url);
 
@@ -166,6 +143,7 @@ $("#form_cad_manutencao").on("submit", function (e) {
       processData: false,
       beforeSend: function () {
         $("#response").html("");
+        $("#msg-modal").html("");
         $("#form_cad_manutencao").LoadingOverlay("show", {
           background: "rgba(165, 190, 100, 0.5)",
         });
@@ -182,14 +160,17 @@ $("#form_cad_manutencao").on("submit", function (e) {
               "</button>" +
               "</div>"
           );
-        } else if (data.erro && data.erros_model.nome) {
-          $("#response").html(
-            '<div class="text-danger" style="font-size: 13px; margin-top:8px">' +
-              data.erros_model.nome +
-              "</div>"
-          );
         } else if (data.erro) {
-          alert("Existe erro de validação: " + data.erros_model);
+          if (data.erros_data) {
+            $("#msg-modal").html(
+              '<div class="text-danger" style="font-size: 13px; margin-top:8px"><p>' +
+                data.erros_data +
+                "</p></div>"
+            );
+            $("#novoModal").modal("show");
+          } else {
+            alert("Existe erro de validação: " + data.erros_model);
+          }
         } else {
           //tudo certo na atualização, redirecionar o usuário
           window.location.href = data.redirect_url;
