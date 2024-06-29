@@ -22,7 +22,7 @@ $(function () {
       },
     ],
     ajax: {
-      url: "estoque_all",
+      url: "manutencao_all",
       beforeSend: function () {
         $("#lista-manutencao").LoadingOverlay("show", {
           background: "rgba(165, 190, 100, 0.5)",
@@ -34,13 +34,16 @@ $(function () {
     },
     columns: [
       {
-        data: "nome",
+        data: "data",
       },
       {
-        data: "ano",
+        data: "veiculo",
       },
       {
-        data: "motor",
+        data: "tipo",
+      },
+      {
+        data: "servico",
       },
       {
         data: "acoes",
@@ -48,21 +51,33 @@ $(function () {
     ],
     columnDefs: [
       {
-        width: "80px",
-        className: "text-left",
+        width: "100px",
+        type: "date",
+        targets: [0],
+        render: function (data, type, row) {
+          // Renderizar a data no formato "YYYY-MM-DD" para ordenação
+          if (type === "sort" || type === "type") {
+            return data.replace(/(\d{2})\/(\d{2})\/(\d{4})/, "$3-$2-$1");
+          }
+          return data;
+        },
+      },
+      {
+        width: "270px",
         targets: [1],
       },
       {
-        width: "70px",
-        className: "text-center",
+        width: "100px",
+        className: "text-left",
         targets: [2],
       },
       {
         width: "70px",
         className: "text-center",
-        targets: [3],
+        targets: [4],
       },
     ],
+    order: [[0, "desc"]],
   });
 
   table.on("init", function () {
@@ -86,42 +101,35 @@ $("#form_cad_manutencao").on("submit", function (e) {
 
   if (veiculoValue === "") {
     $("#msg-modal").html(
-      '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
-        "Selecione o veículo!" +
-        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-        '<span aria-hidden="true">&times;</span>' +
-        "</button>" +
+      '<div class="alert alert-info alert-dismissible fade show" role="alert">' +
+        "Selecione o <strong>VEÍCULO</strong>" +
         "</div>"
     );
     $("#novoModal").modal("show");
     return false;
   } else if (tipoValue === "") {
     $("#msg-modal").html(
-      '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
-        "Selecione o tipo de manutenção realizada" +
+      '<div class="alert alert-info alert-dismissible fade show" role="alert">' +
+        "Selecione o <strong>TIPO DE MANUTENÇÃO</strong> realizada" +
         "</div>"
     );
     $("#novoModal").modal("show");
     return false;
   } else if (dataCompra === "") {
-    $("#response").html(
-      '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
-        "Informe a data do serviço" +
-        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-        '<span aria-hidden="true">&times;</span>' +
-        "</button>" +
+    $("#msg-modal").html(
+      '<div class="alert alert-info alert-dismissible fade show" role="alert">' +
+        "Informe a <strong>DATA DO SERVIÇO</strong>" +
         "</div>"
     );
+    $("#novoModal").modal("show");
     return false;
   } else if (valorCompra === "" || isZero) {
-    $("#response").html(
-      '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
-        "Informe o VALOR DA MANUTENÇÃO ou preencha-o com valor diferente de zero" +
-        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-        '<span aria-hidden="true">&times;</span>' +
-        "</button>" +
+    $("#msg-modal").html(
+      '<div class="alert alert-info alert-dismissible fade show" role="alert">' +
+        "Informe o <strong>VALOR DA MANUTENÇÃO</strong> ou preencha-o com valor diferente de zero" +
         "</div>"
     );
+    $("#novoModal").modal("show");
     return false;
   } else {
     let url = "";
@@ -163,7 +171,7 @@ $("#form_cad_manutencao").on("submit", function (e) {
         } else if (data.erro) {
           if (data.erros_data) {
             $("#msg-modal").html(
-              '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
+              '<div class="alert alert-warning alert-dismissible fade show" role="alert">' +
                 data.erros_data +
                 "</div>"
             );

@@ -37,9 +37,10 @@
             <table id="lista-manutencao" class="table table-striped">
               <thead>
                 <tr>
+                  <th>Data</th>
                   <th>Veículo</th>
-                  <th>Ano</th>
-                  <th>Motor</th>
+                  <th>Tipo</th>
+                  <th>Serviço</th>
                   <th>Ações</th>
                 </tr>
               </thead>

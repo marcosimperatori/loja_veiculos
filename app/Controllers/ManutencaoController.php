@@ -99,13 +99,13 @@ class ManutencaoController extends BaseController
             return redirect()->back();
         }
 
-        /* $request = \Config\Services::request();
+        $request = \Config\Services::request();
         $path = $request->getUri()->getPath();
-        if (strpos($path, 'estoque') !== false) {
-            $url = 'estoque';
-        } else {
+        if (strpos($path, 'lancar') !== false) {
             $url = 'manutencao';
-        }*/
+        } else {
+            $url = 'estoque';
+        }
 
         //atualiza o token do formulário
         $retorno['token'] = csrf_hash();
@@ -117,7 +117,7 @@ class ManutencaoController extends BaseController
         $dados = $this->EAnteriorACompraVeiculo($post['idestoque'], $post['data_manu']);
 
         if ($dados["dataInvalida"]) {
-            $msg = "O veículo foi comprado em " . date('d/m/Y', strtotime($dados["data_compra"])) . ", não é permitido lançar custos com manutenção antes da entrada do veículo no estoque.";
+            $msg = "O veículo foi comprado em <strong>" . date('d/m/Y', strtotime($dados["data_compra"])) . "</strong>, não é permitido lançar custos com manutenção antes da entrada do veículo no estoque.";
 
             $retorno['erro'] = "Verifique os avisos de erro e tente novamente";
             $retorno['erros_data'] = "A data informada é anterior a da aquisição do veículo. " . $msg;
@@ -135,7 +135,7 @@ class ManutencaoController extends BaseController
                 //$retorno['id'] = $this->clienteModel->getInsertID();
                 //$NovoCliente = $this->buscaClienteOu404($retorno['id']);
                 session()->setFlashdata('sucesso', "Manutenção lançada");
-                $retorno['redirect_url'] = base_url("manutencao");
+                $retorno['redirect_url'] = base_url($url);
 
                 return $this->response->setJSON($retorno);
             }
@@ -185,5 +185,45 @@ class ManutencaoController extends BaseController
             'tipos' => $this->tiposManutencao()
         ];
         return view('manutencao/editar', $data);
+    }
+
+    public function getAll()
+    {
+        //garatindo que este método seja chamado apenas via ajax
+        if (!$this->request->isAJAX()) {
+            return redirect()->back();
+        }
+        $atributos = [
+            'manutencao.id', 'manutencao.data_manu', 'manutencao.descricao',
+            'estoque.versao', 'estoque.vendido', 'estoque.motor', 'estoque.cor',
+            'veiculo_modelo.modelo', 'manutencao_tipo.tipo_manu'
+        ];
+
+        $manutencoes = $this->manutencaoModel->select($atributos)
+            ->join('estoque', 'estoque.id = manutencao.idestoque')
+            ->join('veiculo_modelo', 'veiculo_modelo.id = estoque.idveiculo')
+            ->join('manutencao_tipo', 'manutencao_tipo.id = manutencao.idtipomanut')
+            ->orderBy('manutencao.data_manu', 'desc')
+            ->findAll();
+
+        $data = [];
+
+        foreach ($manutencoes as $manut) {
+            $id = encrypt($manut->id);
+            $data[] = [
+                'data'    => date('d/m/Y', strtotime($manut->data_manu)),
+                'veiculo' => $manut->modelo . ' ' . $manut->versao . ' ' . $manut->motor . ' ' . $manut->cor,
+                'tipo'    => $manut->tipo_manu,
+                'servico' => $manut->descricao,
+                'acoes'   => '<a  href="' . base_url("manutencao/editar/$id") . '" title="Editar"><i class="fas fa-edit text-success"></i></a> &nbsp; 
+                              <a  href="' . base_url("manutencao/deletar/$id") . '" title="Excluir"><i class="fas fa-trash-alt text-danger"></i></a>'
+            ];
+        }
+
+        $retorno = [
+            'data' => $data
+        ];
+
+        return $this->response->setJSON($retorno);
     }
 }
