@@ -51,7 +51,7 @@ $(function () {
     ],
     columnDefs: [
       {
-        width: "100px",
+        width: "90px",
         type: "date",
         targets: [0],
         render: function (data, type, row) {

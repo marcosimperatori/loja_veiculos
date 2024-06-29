@@ -42,7 +42,7 @@
   </div>
   <script>
     ClassicEditor
-      .create(document.querySelector('#obs'))
+      .create(document.querySelector('#descricao'))
       .then(editor => {
         console.log(editor);
       })
