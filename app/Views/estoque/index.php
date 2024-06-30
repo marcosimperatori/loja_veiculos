@@ -57,9 +57,118 @@
 </div>
 <!-- /.content -->
 
-<?php $this->endSection(); ?>
+<!-- Modal deletar -->
+<div class="modal fade" id="maintenance" tabindex="-1" role="dialog" aria-labelledby="maintenance" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="maint-title">Manutenções</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <h2 id="maint-response"></h2>
+
+        <!-- Conteúdo do modal -->
+        <h2 id="fabricanteid"></h2>
+        <input type="hidden" id="codFabricante">
+        <p id="codigo"></p>
+
+        <div class="timeline">
+          <!-- Timeline time label -->
+          <div class="time-label">
+            <span class="bg-green">15 Jun. 2024</span>
+          </div>
+          <div>
+            <!-- Before each timeline item corresponds to one icon on the left scale -->
+            <i class="fas fa-handshake bg-green"></i>
+            <!-- Timeline item -->
+            <div class="timeline-item">
+
+              <!-- Header. Optional -->
+              <h3 class="timeline-header">Veículo vendido</h3>
+              <!-- Body -->
+              <div class="timeline-body">
+                Comprador: Fulano de Tal.
+              </div>
+            </div>
+          </div>
+
+          <!-- Timeline time label -->
+          <div class="time-label">
+            <span class="bg-gray">12 Jun. 2024</span>
+          </div>
+          <div>
+            <!-- Before each timeline item corresponds to one icon on the left scale -->
+            <i class="fas fa-shower bg-light-gray"></i>
+            <!-- Timeline item -->
+            <div class="timeline-item">
+
+              <!-- Header. Optional -->
+              <h3 class="timeline-header">Serviço de higienização</h3>
+              <!-- Body -->
+              <div class="timeline-body">
+                Limpeza do veículo para ser colocado a venda.
+              </div>
+            </div>
+          </div>
+
+          <!-- Timeline time label -->
+          <div class="time-label">
+            <span class="bg-gray">10 Jun. 2024</span>
+          </div>
+          <div>
+            <!-- Before each timeline item corresponds to one icon on the left scale -->
+            <i class="fas fa-tools bg-light-gray"></i>
+            <!-- Timeline item -->
+            <div class="timeline-item">
+
+              <!-- Header. Optional -->
+              <h3 class="timeline-header">Serviço de elétrica</h3>
+              <!-- Body -->
+              <div class="timeline-body">
+                Troca das lâmpadas do painel do ar condicionado; Sensor do freio de mão.
+              </div>
+
+            </div>
+          </div>
+
+          <div class="time-label">
+            <span class="bg-primary">07 Jun. 2024</span>
+          </div>
+          <div>
+            <!-- Before each timeline item corresponds to one icon on the left scale -->
+            <i class="fas fa-cart-plus bg-blue"></i>
+            <!-- Timeline item -->
+            <div class="timeline-item">
+              <!-- Header. Optional -->
+              <h3 class="timeline-header">Compra do veículo</h3>
+              <!-- Body -->
+              <div class="timeline-body">
+                Arranhados no parachoque dianteiro; pneus desgastados.
+              </div>
+
+            </div>
+          </div>
+          <!-- The last icon means the story is complete -->
+          <div>
+            <i class="fas fa-clock bg-gray"></i>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <?php $this->endSection(); ?>
 
 
-<?php echo $this->section('scripts'); ?>
-<script src="<?php echo base_url("assets/js/estoque.js"); ?>"></script>
-<?php $this->endSection(); ?>
+  <?php echo $this->section('scripts'); ?>
+  <script src="<?php echo base_url("assets/js/estoque.js"); ?>"></script>
+  <?php $this->endSection(); ?>

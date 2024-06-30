@@ -49,3 +49,4 @@ $routes->post('manutencao/inserir', 'ManutencaoController::cadastrar'); //ajax
 $routes->get('manutencao/editar/(:alphanum)', 'ManutencaoController::edit/$1');
 $routes->post('manutencao/atualizar', 'ManutencaoController::atualizar'); //ajax
 $routes->get('manutencao_all', 'ManutencaoController::getAll'); //ajax
+$routes->get('manutencao/detalhar', 'ManutencaoController::detalhar'); //ajax

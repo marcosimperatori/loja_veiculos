@@ -226,4 +226,29 @@ class ManutencaoController extends BaseController
 
         return $this->response->setJSON($retorno);
     }
+
+    public function detalhar()
+    {
+        if (!$this->request->isAJAX()) {
+            return redirect()->back();
+        }
+
+        $id = $this->request->getGet("id");
+
+        $id = decrypt($id);
+        if (!$id) {
+            return redirect()->to('manutencao');
+        }
+
+        $veiculo = $this->estoqueModel
+            ->select('modelo,versao,motor, ano')
+            ->join("veiculo_modelo", "veiculo_modelo.id = estoque.idveiculo")
+            ->find($id);
+
+        $retorno = [
+            'nome' => $veiculo->modelo . ' ' . $veiculo->versao . ' ' . $veiculo->motor . ' ' . $veiculo->ano
+        ];
+
+        return $this->response->setJSON($retorno);
+    }
 }

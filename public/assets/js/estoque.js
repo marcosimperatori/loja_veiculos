@@ -214,7 +214,20 @@ $("#form_cad_estoque").on("submit", function (e) {
 
 function camposObrigatorios() {}
 
-$("#lista-fabricante").on("click", "#fabri", function () {
-  const id = $(this).data("id");
-  editarFabricante(id);
+$("#lista-estoque").on("click", "#detail", function () {
+  const id = $(this).data("detail");
+  listarManutencoes(id);
 });
+
+function listarManutencoes(id) {
+  $.get("/manutencao/detalhar", { id: id })
+    .done(function (data) {
+      $("#maint-title").html("Histórico: " + data.nome);
+    })
+    .fail(function (data) {
+      alert("Erro ao tentar obter o nome do veículo");
+    });
+
+  $("#codigo").html();
+  $("#maintenance").modal("show");
+}
