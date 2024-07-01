@@ -85,10 +85,13 @@
       </div>
     </div>
   </div>
+</div>
+</div>
+</div>
 
-  <?php $this->endSection(); ?>
+<?php $this->endSection(); ?>
 
 
-  <?php echo $this->section('scripts'); ?>
-  <script src="<?php echo base_url("assets/js/estoque.js"); ?>"></script>
-  <?php $this->endSection(); ?>
+<?php echo $this->section('scripts'); ?>
+<script src="<?php echo base_url("assets/js/estoque.js"); ?>"></script>
+<?php $this->endSection(); ?>

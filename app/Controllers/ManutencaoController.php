@@ -268,13 +268,13 @@ class ManutencaoController extends BaseController
         $data = [];
 
         $estoque = $this->estoqueModel
-            ->select('data_compra', 'obs')
             ->find($id);
 
         $data[] = [
             'compra' => [
                 'data' => $estoque->data_compra,
-                'obs' => $estoque->obs
+                'obs'  => $estoque->obs,
+                'preco' => number_format($estoque->preco_compra, 2, ',', '.')
             ]
         ];
 
@@ -326,7 +326,7 @@ class ManutencaoController extends BaseController
                 }
 
                 $linha .= ' <div class="timeline-item">';
-                $linha .= '<span class="time text-danger"><i class="fas fa-calculator"></i>&nbsp;' . $dado['manut']['preco'] . '</span>';
+                $linha .= '<strong class="time text-danger"><i class="fas fa-calculator"></i>&nbsp; R$ ' . $dado['manut']['preco'] . '</strong>';
                 $linha .= ' <h3 class="timeline-header">Serviço de ' . $dado['manut']['tipo'] . '</h3>';
                 $linha .= ' <div class="timeline-body">' . $dado['manut']['desc'] . '</div>';
                 $linha .= ' </div></div>';
@@ -337,6 +337,7 @@ class ManutencaoController extends BaseController
                 $compra .= '<div>';
                 $compra .= '<i class="fas fa-cart-plus bg-blue"></i>';
                 $compra .= ' <div class="timeline-item">';
+                $compra .= '<strong class="time text-primary"><i class="fas fa-calculator"></i>&nbsp; R$ ' . $dado['compra']['preco'] . '</strong>';
                 $compra .= ' <h3 class="timeline-header">Compra do veículo</h3>';
                 $compra .= ' <div class="timeline-body">' . $dado['compra']['obs'] . '</div>';
                 $compra .= ' </div></div>';
