@@ -113,6 +113,13 @@ class ManutencaoController extends BaseController
         //recuperando os dados que vieram na requisiçao
         $post = $this->request->getPost();
 
+        // Remove máscara dos valores monetários e substitui a vírgula pelo ponto
+        if (isset($post['preco'])) {
+            $post['preco'] = str_replace('.', '', $post['preco']);
+            $post['preco'] = str_replace(',', '.', $post['preco']);
+        }
+
+
         // Objetivo é certificar que todas as manutenções sejam posteriores a data da aquisição do veículo
         $dados = $this->EAnteriorACompraVeiculo($post['idestoque'], $post['data_manu']);
 
@@ -283,7 +290,8 @@ class ManutencaoController extends BaseController
                 'manut' => [
                     'data' => $manut->data_manu,
                     'desc' => $manut->descricao,
-                    'tipo' => $manut->tipo_manu
+                    'tipo' => $manut->tipo_manu,
+                    'preco' => number_format($manut->preco, 2, ',', '.')
                 ]
             ];
         }
@@ -318,6 +326,7 @@ class ManutencaoController extends BaseController
                 }
 
                 $linha .= ' <div class="timeline-item">';
+                $linha .= '<span class="time text-danger"><i class="fas fa-calculator"></i>&nbsp;' . $dado['manut']['preco'] . '</span>';
                 $linha .= ' <h3 class="timeline-header">Serviço de ' . $dado['manut']['tipo'] . '</h3>';
                 $linha .= ' <div class="timeline-body">' . $dado['manut']['desc'] . '</div>';
                 $linha .= ' </div></div>';
