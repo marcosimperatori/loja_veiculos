@@ -223,6 +223,7 @@ function listarManutencoes(id) {
   $.get("/manutencao/detalhar", { id: id })
     .done(function (data) {
       $("#maint-title").html("Histórico: " + data.nome);
+      $("#timeline").html(data.linha);
     })
     .fail(function (data) {
       alert("Erro ao tentar obter o nome do veículo");

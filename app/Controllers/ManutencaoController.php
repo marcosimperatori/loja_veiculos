@@ -237,7 +237,7 @@ class ManutencaoController extends BaseController
 
         $id = decrypt($id);
         if (!$id) {
-            return redirect()->to('manutencao');
+            return redirect()->to('estoque');
         }
 
         $veiculo = $this->estoqueModel
@@ -245,10 +245,99 @@ class ManutencaoController extends BaseController
             ->join("veiculo_modelo", "veiculo_modelo.id = estoque.idveiculo")
             ->find($id);
 
+        $dados = $this->dadosParaLinhaTempo($id);
+        $linha = $this->gerarLinhaDoTempo($dados);
+
         $retorno = [
-            'nome' => $veiculo->modelo . ' ' . $veiculo->versao . ' ' . $veiculo->motor . ' ' . $veiculo->ano
+            'nome' => $veiculo->modelo . ' ' . $veiculo->versao . ' ' . $veiculo->motor . ' ' . $veiculo->ano,
+            'linha' => $linha
         ];
 
         return $this->response->setJSON($retorno);
+    }
+
+    private function dadosParaLinhaTempo(int $id)
+    {
+        $data = [];
+
+        $estoque = $this->estoqueModel
+            ->select('data_compra', 'obs')
+            ->find($id);
+
+        $data[] = [
+            'compra' => [
+                'data' => $estoque->data_compra,
+                'obs' => $estoque->obs
+            ]
+        ];
+
+        $manutencoes = $this->manutencaoModel
+            ->join('manutencao_tipo', 'manutencao_tipo.id = manutencao.idtipomanut')
+            ->where('idestoque', $id)
+            ->orderBy('data_manu', 'desc')
+            ->orderBy('tipo_manu', 'asc')
+            ->findAll();
+
+        foreach ($manutencoes as $manut) {
+            $data[] = [
+                'manut' => [
+                    'data' => $manut->data_manu,
+                    'desc' => $manut->descricao,
+                    'tipo' => $manut->tipo_manu
+                ]
+            ];
+        }
+
+        //pegar informações sobre a venda neste ponto, futuramente
+
+
+
+        return $data;
+    }
+
+    private function gerarLinhaDoTempo($dados)
+    {
+        setlocale(LC_TIME, 'pt_BR.utf-8');
+        $linha = '<div class="timeline">';
+
+        foreach ($dados as $dado) {
+            if (isset($dado['venda'])) {
+                //implementar parte da venda
+            } else if (isset($dado['manut'])) {
+                $linha .= '<div class="time-label">';
+                $linha .= '<span class="bg-gray">' . strftime('%d %b %Y', strtotime($dado['manut']['data'])) . '</span>';
+                $linha .= '</div>';
+                $linha .= '<div>';
+
+                if ($dado['manut']['tipo'] === 'Higienização') {
+                    $linha .= '<i class="fas fa-shower bg-light-gray"></i>';
+                } else if ($dado['manut']['tipo'] === 'Elétrica') {
+                    $linha .= '<i class="fas fa-car-battery bg-light-gray"></i>';
+                } else {
+                    $linha .= '<i class="fas fa-tools bg-light-gray"></i>';
+                }
+
+                $linha .= ' <div class="timeline-item">';
+                $linha .= ' <h3 class="timeline-header">Serviço de ' . $dado['manut']['tipo'] . '</h3>';
+                $linha .= ' <div class="timeline-body">' . $dado['manut']['desc'] . '</div>';
+                $linha .= ' </div></div>';
+            } else if (isset($dado['compra'])) {
+                $compra  = '<div class="time-label">';
+                $compra .= '<span class="bg-primary">' . strftime('%d %b %Y', strtotime($dado['compra']['data'])) . '</span>';
+                $compra .= '</div>';
+                $compra .= '<div>';
+                $compra .= '<i class="fas fa-cart-plus bg-blue"></i>';
+                $compra .= ' <div class="timeline-item">';
+                $compra .= ' <h3 class="timeline-header">Compra do veículo</h3>';
+                $compra .= ' <div class="timeline-body">' . $dado['compra']['obs'] . '</div>';
+                $compra .= ' </div></div>';
+            }
+        }
+        if (isset($compra)) {
+            $linha .= $compra;
+        }
+        $linha .= '<div><i class="fas fa-clock bg-gray"></i></div></div>';
+
+        return $linha;
     }
 }
