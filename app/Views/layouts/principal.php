@@ -309,6 +309,7 @@
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
+
       <?php echo $this->renderSection('conteudo'); ?>
     </div>
     <!-- /.content-wrapper -->

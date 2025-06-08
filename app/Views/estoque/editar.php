@@ -31,7 +31,7 @@
         <div id="response" class="col-12"></div>
 
         <div class="col-12">
-          <div class="card mt-3">
+          <div class="card shadow mt-3">
             <div class="card-header">
               <h4>Dados da compra</h4>
             </div>
